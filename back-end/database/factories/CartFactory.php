@@ -23,7 +23,6 @@ class CartFactory extends Factory
             'user_id' => User::all()->random()->id,
             'product_id' => Product::all()->random()->id,
             'quantity' => rand(1,10),
-            'topping_id' => Topping::all()->random()->id,
         ];
     }
 }

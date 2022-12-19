@@ -24,6 +24,6 @@ class Cart extends Model
     }
     public function topping()
     {
-        return $this->belongsTo(Topping::class);
+        return $this->hasMany(Topping::class);
     }
 }
