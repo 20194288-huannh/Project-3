@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             ToppingSeeder::class,
             UserSeeder::class,
+            VoucherSeeder::class,
+            CartSeeder::class,
             OrderSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();

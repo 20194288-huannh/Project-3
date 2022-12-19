@@ -2,14 +2,15 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
+use App\Models\Topping;
 use App\Models\User;
-use App\Models\Voucher;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Order>
  */
-class OrderFactory extends Factory
+class CartFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,9 +21,9 @@ class OrderFactory extends Factory
     {
         return [
             'user_id' => User::all()->random()->id,
-            'voucher_id' => Voucher::where('type', 1)->first()->id,
-            'total_price' => fake()->numberBetween(200, 500),
-            'voucher_shipping_id' => Voucher::where('type', 2)->first()->id,
+            'product_id' => Product::all()->random()->id,
+            'quantity' => rand(1,10),
+            'topping_id' => Topping::all()->random()->id,
         ];
     }
 }
