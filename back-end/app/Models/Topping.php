@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Topping extends Model
 {
     use HasFactory, SoftDeletes;
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
 }

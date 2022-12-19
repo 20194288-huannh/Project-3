@@ -9,4 +9,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Cart extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $guarded = [];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+    public function topping()
+    {
+        return $this->belongsTo(Topping::class);
+    }
 }
