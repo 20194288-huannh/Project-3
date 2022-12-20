@@ -7,11 +7,16 @@ use App\Models\Cart;
 use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 
-class CartController extends Controller
+class CartController extends ApiController
 {
+    public function index()
+    {
+        $carts = Cart::paginate();
+        return $this->response(['message' => 'success', 'data' => CartResource::collection($carts)]);
+    }
     public function getCartByOrder($order_id)
     {
-        $cart = Cart::where('order_id', $order_id)->latest()->get();
-        return $this->response(['message' => 'success', 'data' => CartResource::collection($cart)]);
+        $carts = Cart::where('order_id', $order_id)->latest()->get();
+        return $this->response(['message' => 'success', 'data' => CartResource::collection($carts)]);
     }
 }

@@ -9,8 +9,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     use HasFactory, SoftDeletes;
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     public function carts()
     {
         return $this->hasMany(Cart::class);
+    }
+    public function voucher()
+    {
+        return $this->belongsTo(Voucher::class, 'voucher_id');
+    }
+    public function voucher_shipping()
+    {
+        return $this->belongsTo(Voucher::class, 'voucher_shipping_id');
     }
 }
