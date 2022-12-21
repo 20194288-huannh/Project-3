@@ -13,9 +13,9 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function carts()
+    public function cart()
     {
-        return $this->hasMany(Cart::class);
+        return $this->belongsTo(Cart::class);
     }
     public function voucher()
     {
@@ -24,5 +24,13 @@ class Order extends Model
     public function voucher_shipping()
     {
         return $this->belongsTo(Voucher::class, 'voucher_shipping_id');
+    }
+    public function topping()
+    {
+        return $this->belongsToMany(Topping::class);
+    }
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

@@ -21,8 +21,7 @@ class CartFactory extends Factory
     {
         return [
             'user_id' => User::all()->random()->id,
-            'product_id' => Product::all()->random()->id,
-            'quantity' => rand(1,10),
+            'total_price' => fake()->numberBetween(200, 500),
         ];
     }
 }

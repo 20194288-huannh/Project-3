@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Cart;
+use App\Models\Product;
 use App\Models\User;
 use App\Models\Voucher;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,8 +23,12 @@ class OrderFactory extends Factory
         return [
             'user_id' => User::all()->random()->id,
             'voucher_id' => Voucher::where('type', 1)->first()->id,
-            'total_price' => fake()->numberBetween(200, 500),
             'voucher_shipping_id' => Voucher::where('type', 2)->first()->id,
+            'cart_id' => Cart::all()->random()->id,
+            'product_id' => Product::all()->random()->id,
+            'quantity' => rand(1, 10),
+            'size' => rand(1, 4),
+            'status' => rand (1, 3),
         ];
     }
 }

@@ -18,11 +18,13 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'user' => $this->user ? new UserResource($this->user) : null,
             'voucher' => $this->voucher ? new VoucherResource($this->voucher) : null,
-            'total_price' => $this->total_price,
             'voucher_shipping' => $this->voucher_shipping ? new VoucherResource($this->voucher_shipping) : null,
+            'quantity' => $this->quantity,
+            'size' => $this->size,
+            'topping' => ToppingResource::collection($this->topping),
             'status' => $this->status,
             'create_at' => $this->create_at,
-            'update_at' => $this->update_at
+            'update_at' => $this->update_at,
         ];
     }
 }
