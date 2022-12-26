@@ -1,0 +1,82 @@
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('~assets/fonts/DMSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('~assets/fonts/DMSans-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('~assets/fonts/DMSans-Bold.ttf') format('truetype');
+}
+
+:root {
+  --main: #ff945c;
+  --text: #4d4d4d;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+select {
+  cursor: pointer;
+}
+a {
+  color: var(--text);
+}
+a:hover{
+  color: var(--main);
+}
+.required:after {
+  content: '*';
+  color: #dc3545;
+  margin-left: 3px;
+}
+.wrapper {
+  position: relative;
+}
+.wrapper, body, html {
+  min-height: 100%;
+}
+
+.nav-link.active {
+  background: var(--main);
+  color: white;
+}
+
+.col-form-label {
+  font-weight: 500;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.detail th {
+  vertical-align: top !important;
+}
+
+.detail td {
+  white-space: pre-wrap;
+}
+
+.custom-select {
+  background: url('@/assets/images/svg/ic_caret_down.svg') right 0.75rem center/8px 10px no-repeat;
+  background-size: 14px;
+}
