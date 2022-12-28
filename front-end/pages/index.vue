@@ -1,16 +1,17 @@
 <template>
   <b-container fluid>
-    <Slider/>
-    <TrendingSlider/>
+    <HomeSlider/>
+    <HomeTrendingSlider/>
+    <HomeBestSeller/>
   </b-container>
 </template>
 
 <script>
-import Slider from '../components/Slider.vue'
-import Slider from '../components/Slider.vue'
-import TrendingSlider from '../components/TrendingSlider.vue'
+import Slider from '~/components/home/Slider'
+import TrendingSlider from '../components/home/TrendingSlider.vue'
+import BestSeller from '../components/home/BestSeller.vue'
 export default {
-  components: { Slider, TrendingSlider },
-  name: 'IndexPage',
+  components: { Slider, TrendingSlider, BestSeller },
+  name: 'Index',
 }
 

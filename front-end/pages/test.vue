@@ -1,28 +1,14 @@
 <template>
     <b-container fluid>
-        <b-row>
-            <b-col>
-                <ItemBook/>
-            </b-col>
-            <b-col>
-                <ItemBook/>
-            </b-col>
-            <b-col>
-                <ItemBook/>
-            </b-col>
-            <b-col>
-                <ItemBook/>
-            </b-col>
-            <b-col>
-                <ItemBook/>
-            </b-col>
-            <b-col>
-                <ItemBook/>
-            </b-col>
-            <b-col>
-                <ItemBook/>
-            </b-col>
-        </b-row>
+        <div class="grid-container">
+            <ItemBook/>
+            <ItemBook/>
+            <ItemBook/>
+            <ItemBook/>
+            <ItemBook/>
+            <ItemBook/>
+            <ItemBook/>
+        </div>
     </b-container>
 </template>
 
@@ -37,5 +23,10 @@ import ItemBook from '../components/ItemBook.vue'
 </script>
 
 <style lang="scss" scoped>
+.grid-container {
+    display: grid;
+    column-gap: 5px;
+    grid-template-columns: auto auto auto auto auto auto auto ;
+}
 
 </style>

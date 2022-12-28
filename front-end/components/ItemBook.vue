@@ -1,6 +1,7 @@
 <template>
   <div>
-    <b-card @mouseover="isShowQuickView = 1" @mouseout="isShowQuickView = 0">
+    <b-card @mouseover="isShowQuickView = 1" @mouseout="isShowQuickView = 0" :class="isShowQuickView ? '' : 'border-card'">
+        <div class="offer position-absolute">40%</div>
         <a
           href="https://www.bookswagon.com/book/wuthering-heights-emily-brontë/9788172344894"
         >
@@ -81,7 +82,22 @@ a.quick-view.themecolor {
     position: relative;
     margin-top: 28px;
 }
-.card {
-    border: none;
+.border-card {
+    border: 1px solid #fff;
+}
+.offer{
+    background: red;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: #fff;
+    right: 0;
+    line-height: 20px;
+    font-size: 13px;
+    padding-top: 8px;
+    font-weight: 700;
+    z-index: 9;
+    right: 8px;
+    top: 22px;
 }
 </style>
