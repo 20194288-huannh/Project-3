@@ -2,13 +2,66 @@
   <b-container fluid class="p-5">
     <h3 class="text-center font-italic">New Arrivals</h3>
     <b-row>
-      <b-col style="width: fit-content;">
+      <b-col style="flex:20">
         <h5 class="font-italic">Refine your Search</h5>
-        <div>Price range: ₹0 - ₹50000</div>
+        <div>Price range: ₹{{ minPrice }} - ₹{{ maxPrice }}</div>
+        <multi-range-slider
+          class="pt-3 pl-3 pr-5"
+          baseClassName="multi-range-slider-bar-only"
+          :minValue="minPrice"
+          :maxValue="maxPrice"
+          :max="50000"
+          :min="0"
+          :step="100"
+          :rangeMargin="0"
+          @input="updateFilterPrice"
+        >
+        </multi-range-slider>
+        <div>Discount Range: {{ minDiscount }}%-{{ maxDiscount }}%</div>
+        <multi-range-slider
+          class="pt-3 pl-3 pr-5"
+          baseClassName="multi-range-slider-bar-only"
+          :minValue="minDiscount"
+          :maxValue="maxDiscount"
+          :max="50"
+          :min="0"
+          :step="1"
+          :rangeMargin="0"
+          @input="updateFilterDiscount"
+        >
+        </multi-range-slider>
+        <span class="text-danger font-italic font-weight-bold">Binding</span>
+        <b-form-group
+          v-slot="{ ariaDescribedby }"
+          class="mt-3"
+        >
+          <b-form-checkbox-group
+            v-model="selected_binding"
+            :options="options_binding"
+            :aria-describedby="ariaDescribedby"
+            name="flavour-2a"
+            stacked
+          ></b-form-checkbox-group>
+        </b-form-group>
+        <span class="text-danger font-italic font-weight-bold">Languages</span>
+        <b-form-group
+          v-slot="{ ariaDescribedby }"
+          class="mt-3"
+        >
+          <b-form-checkbox-group
+            v-model="selected_languages"
+            :options="options_languages"
+            :aria-describedby="ariaDescribedby"
+            name="flavour-2a"
+            stacked
+          ></b-form-checkbox-group>
+        </b-form-group>
       </b-col>
-      <b-col cols="9">
+      <b-col style="flex:80">
         <div class="d-flex justify-content-between">
-          <span class="d-flex align-items-center"><strong>401 results found</strong></span>
+          <span class="d-flex align-items-center"
+            ><strong>401 results found</strong></span
+          >
           <div>
             <span>Sort By: </span>
             <b-dropdown
@@ -25,19 +78,19 @@
           </div>
         </div>
         <div class="grid-container">
-            <ItemBook style="border: 1px solid rgba(0,0,0,.125);"/>
-            <ItemBook style="border: 1px solid rgba(0,0,0,.125);"/>
-            <ItemBook style="border: 1px solid rgba(0,0,0,.125);"/>
-            <ItemBook style="border: 1px solid rgba(0,0,0,.125);"/>
-            <ItemBook style="border: 1px solid rgba(0,0,0,.125);"/>
-            <ItemBook style="border: 1px solid rgba(0,0,0,.125);"/>
-            <ItemBook style="border: 1px solid rgba(0,0,0,.125);"/>
-            <ItemBook style="border: 1px solid rgba(0,0,0,.125);"/>
-            <ItemBook style="border: 1px solid rgba(0,0,0,.125);"/>
-            <ItemBook style="border: 1px solid rgba(0,0,0,.125);"/>
-            <ItemBook style="border: 1px solid rgba(0,0,0,.125);"/>
-            <ItemBook style="border: 1px solid rgba(0,0,0,.125);"/>
-            <ItemBook style="border: 1px solid rgba(0,0,0,.125);"/>
+          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
+          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
+          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
+          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
+          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
+          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
+          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
+          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
+          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
+          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
+          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
+          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
+          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
         </div>
       </b-col>
     </b-row>
@@ -45,13 +98,44 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      maxPrice: 50000,
+      minPrice: 0,
+      minDiscount: 0,
+      maxDiscount: 50,
+      selected_binding: [],
+      options_binding: [
+          { text: 'Paper Back', value: '1' },
+          { text: 'Hand Over', value: '2' },
+          { text: 'Others', value: '3' },
+        ],
+        options_languages: [
+            { text: 'English', value: '1' },
+            { text: 'Other', value: '2' },
+        ]
+    };
+  },
+  methods: {
+    updateFilterPrice(e) {
+      this.maxPrice = e.maxValue;
+      this.minPrice = e.minValue;
+    },
+    updateFilterDiscount(e) {
+      this.minDiscount = e.minValue;
+      this.maxDiscount = e.maxValue;
+    },
+  },
+};
 </script>
 
 <style scoped>
 .grid-container {
-    display: grid;
-    column-gap: 0px;
-    grid-template-columns: auto auto auto auto auto;
+  display: grid;
+  column-gap: 0px;
+  grid-template-columns: auto auto auto auto auto;
 }
+</style>
+<style src="../../node_modules/multi-range-slider-vue/MultiRangeSliderBarOnly.css">
 </style>

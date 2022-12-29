@@ -2,9 +2,7 @@
   <div class="box-login-wrapper">
     <div class="box-login-outer">
       <div class="box-login">
-        <a href="javascript;" class="logo">
-          <img src="/logo.svg" alt="logo" height="45" />
-        </a>
+        <h4 class="text-center font-italic">Log in</h4>
         <b-form @submit.prevent="login">
           <b-form-group label="Email">
             <b-form-input
@@ -15,7 +13,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group label="Password">
+          <b-form-group label="Password" class="none-margin-bottom">
             <b-form-input
               v-model.trim="form.password"
               type="password"
@@ -23,16 +21,23 @@
               required
             ></b-form-input>
           </b-form-group>
-          <b-button type="submit" block variant="primary">Login</b-button>
+          <div class="d-flex justify-content-end mb-3">
+            <span class="text-danger font-weight-bold">Forgot your Password?</span>
+          </div>
+          <b-button type="submit" block variant="danger" class="mb-5">Login</b-button>
         </b-form>
+        <div class="d-flex flex-column">
+          <span class="text-danger text-center mb-3">New to Bookswagon? Sign up</span>
+          <span class="text-center">By continuing, I agree to the <span class="text-danger font-weight-bold"> Terms of Use </span> &  <span class="text-danger font-weight-bold">Privacy Policy</span></span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <style>
 .box-login-wrapper {
-  background-color: rgba(243, 244, 246, 1);
-  min-height: 100vh;
+  background: url(https://www.bookswagon.com/images/css/login_bg.jpg);
+  height: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,13 +58,16 @@
 }
 
 .box-login form {
-  width: 300px;
+  width: 100%;
 }
 
 .box-login .logo {
   display: block;
   margin: 25px auto;
   text-align: center;
+}
+.none-margin-bottom{
+  margin-bottom: 0px !important;
 }
 </style>
 <script>

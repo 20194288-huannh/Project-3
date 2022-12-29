@@ -9,7 +9,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use HasFactory, SoftDeletes;
-    const STATUS_NEW = 1;
+    const STATUS_AVAILABLE = 1;
+    const STATUS_INTERNATIONAL_EDITION = 1;
+
+    const TYPE_PAPER_BACK = 1;
+    const TYPE_HARD_COVER = 2;
+    const TYPE_HARD_BACK = 3;
+    const TYPE_CALENDAR = 4;
     public function category()
     {
         return $this->belongsTo(Category::class);

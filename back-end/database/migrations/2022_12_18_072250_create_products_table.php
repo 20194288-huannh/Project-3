@@ -18,9 +18,13 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->integer('category_id')->nullable();
-            $table->tinyInteger('status')->default(Product::STATUS_NEW);
+            $table->string('author')->nullable();
+            $table->tinyInteger('type')->nullable();
             $table->integer('price')->nullable();
-            $table->integer('quantity')->nullable();
+            $table->integer('sale')->nullable();
+            $table->string('description_title')->nullable();
+            $table->string('description')->nullable();
+            $table->integer('product_detail_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -3,6 +3,7 @@
     <HomeSlider/>
     <HomeTrendingSlider/>
     <HomeBestSeller/>
+    <Slider/>
   </b-container>
 </template>
 

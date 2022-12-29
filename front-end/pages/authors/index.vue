@@ -1,5 +1,6 @@
 <template>
-    <b-container fluid>
+    <b-container>
+        <h4>Featured Authors</h4>
         <div class="grid-container">
             <ItemAuthor/>
             <ItemAuthor/>
@@ -13,12 +14,8 @@
 </template>
 
 <script>
-import ItemBook from '../components/ItemBook.vue'
     export default {
-        components: {
-            ItemBook,
-        },
-        name: "Test"
+        
     }
 </script>
 
@@ -28,5 +25,4 @@ import ItemBook from '../components/ItemBook.vue'
     column-gap: 5px;
     grid-template-columns: auto auto ;
 }
-
 </style>
