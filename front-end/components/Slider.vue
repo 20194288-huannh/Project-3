@@ -2,18 +2,18 @@
     <div>
         <carousel :autoplay="true" :nav="false" :items="7" :loop="true" :center="true" :mouseDrag="true" :dots="false">
             <template slot="prev"><span class="prev">prev</span></template>
-            <ItemBook/>
-            <ItemBook/>
-            <ItemBook/>
-            <ItemBook/>
-            <ItemBook/>
-            <ItemBook/>
-            <ItemBook/>
-            <ItemBook/>
-            <ItemBook/>
-            <ItemBook/>
-            <ItemBook/>
-            <ItemBook/>
+            <VerticalBook/>
+            <VerticalBook/>
+            <VerticalBook/>
+            <VerticalBook/>
+            <VerticalBook/>
+            <VerticalBook/>
+            <VerticalBook/>
+            <VerticalBook/>
+            <VerticalBook/>
+            <VerticalBook/>
+            <VerticalBook/>
+            <VerticalBook/>
             <template slot="next"><span class="next">next</span></template>
         </carousel>
     </div>

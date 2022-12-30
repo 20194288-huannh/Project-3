@@ -1,19 +1,25 @@
 <template>
     <b-container fluid>
-        <div class="grid-container">
-            <ItemAuthor/>
-            <ItemAuthor/>
-            <ItemAuthor/>
-            <ItemAuthor/>
-            <ItemAuthor/>
-            <ItemAuthor/>
-            <ItemAuthor/>
-        </div>
+        <b-row>
+            <b-col cols="3"></b-col>
+            <b-col cols="9" class="d-flex flex-column">
+                <HorizontalBook/>
+                <HorizontalBook/>
+                <HorizontalBook/>
+                <HorizontalBook/>
+                <HorizontalBook/>
+                <HorizontalBook/>
+                <HorizontalBook/>
+                <HorizontalBook/>
+                <HorizontalBook/>
+                <HorizontalBook/>
+            </b-col>
+        </b-row>
     </b-container>
 </template>
 
 <script>
-import ItemBook from '../components/ItemBook.vue'
+import ItemBook from '../components/VerticalBook.vue'
     export default {
         components: {
             ItemBook,

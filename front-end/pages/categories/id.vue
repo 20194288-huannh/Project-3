@@ -78,19 +78,19 @@
           </div>
         </div>
         <div class="grid-container">
-          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
-          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
-          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
-          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
-          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
-          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
-          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
-          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
-          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
-          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
-          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
-          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
-          <ItemBook style="border: 1px solid rgba(0, 0, 0, 0.125)" />
+          <VerticalBook class="item"/>
+          <VerticalBook class="item"/>
+          <VerticalBook class="item"/>
+          <VerticalBook class="item"/>
+          <VerticalBook class="item"/>
+          <VerticalBook class="item"/>
+          <VerticalBook class="item"/>
+          <VerticalBook class="item"/>
+          <VerticalBook class="item"/>
+          <VerticalBook class="item"/>
+          <VerticalBook class="item"/>
+          <VerticalBook class="item"/>
+          <VerticalBook class="item"/>
         </div>
       </b-col>
     </b-row>
@@ -106,6 +106,7 @@ export default {
       minDiscount: 0,
       maxDiscount: 50,
       selected_binding: [],
+      selected_languages: [],
       options_binding: [
           { text: 'Paper Back', value: '1' },
           { text: 'Hand Over', value: '2' },
@@ -135,6 +136,15 @@ export default {
   display: grid;
   column-gap: 0px;
   grid-template-columns: auto auto auto auto auto;
+}
+.item{
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 10px 10px 0 10px;
+}
+</style>
+<style>
+.multi-range-slider-bar-only .bar-inner{
+  background-color: #c5c5c5 !important;
 }
 </style>
 <style src="../../node_modules/multi-range-slider-vue/MultiRangeSliderBarOnly.css">
