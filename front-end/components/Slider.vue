@@ -25,7 +25,7 @@
     }
 </script>
 
-<style scope>
+<style scoped>
 .owl-nav{
     position: absolute;
     top: 100px;

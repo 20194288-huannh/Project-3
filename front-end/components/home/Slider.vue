@@ -41,7 +41,7 @@ export default {
 }
 </script>
 
-<style scope>
+<style scoped>
 .carousel-control-prev-icon, .carousel-control-next-icon{
     background-color: #e42b26 !important;
     padding: 15px !important;

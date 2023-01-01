@@ -85,7 +85,7 @@
     </b-row>
   </b-container>
 </template>
-<style scope>
+<style scoped>
 .btn-search {
   background: #e42b26
     url("https://www.bookswagon.com/images/svg/search-solid.svg") no-repeat
