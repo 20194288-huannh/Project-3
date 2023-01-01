@@ -11,12 +11,8 @@
 html{
   font-family: 'Lato';
 }
-.content-wrapper {
-  margin: 20px 10px 0;
-}
-
-.content {
-  padding: 1rem;
+.container, .container-fluid, .container-sm, .container-md, .container-lg, .container-xl{
+  padding: 0;
 }
 </style>
 <script>

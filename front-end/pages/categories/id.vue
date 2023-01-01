@@ -6,7 +6,7 @@
         <h5 class="font-italic">Refine your Search</h5>
         <div>Price range: ₹{{ minPrice }} - ₹{{ maxPrice }}</div>
         <multi-range-slider
-          class="pt-3 pl-3 pr-5"
+          class="pt-3"
           baseClassName="multi-range-slider-bar-only"
           :minValue="minPrice"
           :maxValue="maxPrice"
@@ -19,7 +19,7 @@
         </multi-range-slider>
         <div>Discount Range: {{ minDiscount }}%-{{ maxDiscount }}%</div>
         <multi-range-slider
-          class="pt-3 pl-3 pr-5"
+          class="pt-3"
           baseClassName="multi-range-slider-bar-only"
           :minValue="minDiscount"
           :maxValue="maxDiscount"
@@ -66,8 +66,8 @@
             <span>Sort By: </span>
             <b-dropdown
               split
-              split-variant="outline-primary"
-              variant="primary"
+              split-variant="outline-danger"
+              variant="danger"
               text="Relevance"
             >
               <b-dropdown-item href="#">Relevance</b-dropdown-item>
@@ -144,7 +144,43 @@ export default {
 </style>
 <style>
 .multi-range-slider-bar-only .bar-inner{
-  background-color: #c5c5c5 !important;
+    background-color: #E9E9E9 !important;
+    box-shadow: none;
+    border: 1px solid #999  !important;
+    box-shadow: none !important;
+    height: 15px !important;
+    border-radius: 0 !important;
+}
+.multi-range-slider-bar-only.zero-ranage-margin .thumb-right {
+    left: 0px !important;
+}
+.multi-range-slider-bar-only .bar-right {
+    width: 25%;
+    background-color: #ffffff !important;
+    border: 1px solid #999  !important;
+    border-radius: 10% !important;
+    box-shadow: none !important;
+}
+.multi-range-slider-bar-only .bar-left {
+    width: 25%;
+    background-color: #ffffff !important;
+    border: 1px solid #999  !important;
+    border-radius: 10% !important;
+    box-shadow: none !important;
+}
+
+.multi-range-slider-bar-only .thumb::before {
+    content: '';
+    background-color: #f6f6f6 !important;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #c5c5c5 !important;
+    box-shadow: none !important;
+    border-radius: 15% !important;
+    z-index: 1;
+    margin: -2.25px !important;
+    cursor: pointer;
 }
 </style>
 <style src="../../node_modules/multi-range-slider-vue/MultiRangeSliderBarOnly.css">

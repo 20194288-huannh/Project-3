@@ -1,5 +1,105 @@
 <template>
   <div>
+    <b-list-group horizontal class="list-group-nav">
+      <b-list-group-item class="col-2 d-flex align-items-center justify-content-center">
+        <a
+          href="https://www.bookswagon.com/promo-best-seller/best-seller/03AC998EBDC2"
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <img
+            src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/icon1.png"
+            width="71px"
+            height="71px"
+            alt="Best seller"
+          /><br />
+          <span>Best Seller</span>
+        </a>
+      </b-list-group-item>
+      <b-list-group-item class="col-2 d-flex align-items-center justify-content-center">
+        <a
+          href="https://www.bookswagon.com/promo-best-seller/award-winning/2109CDC4B4DC"
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <img
+            src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/icon8.png"
+            width="71px"
+            height="71px"
+            alt="Award Winners"
+          /><br />
+          <span>Award Winners</span>
+        </a>
+      </b-list-group-item>
+      <b-list-group-item class="col-2 d-flex align-items-center justify-content-center">
+        <a
+          href="https://www.bookswagon.com/promo-best-seller/box-sets/389DA2389287"
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <img
+            src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/icon4.png"
+            width="71px"
+            height="71px"
+            alt="Box Sets"
+          /><br />
+          <span>Box Sets</span>
+        </a>
+      </b-list-group-item>
+      <b-list-group-item class="col-2 d-flex align-items-center justify-content-center">
+        <a
+          href="https://www.bookswagon.com/promo-best-seller/new-arrivals/99325F010C89"
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <img
+            src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/icon2.png"
+            width="71px"
+            height="71px"
+            alt="New Arrivals"
+          /><br />
+          <span>New Arrivals</span>
+        </a>
+      </b-list-group-item>
+      <b-list-group-item class="col-2 d-flex align-items-center justify-content-center">
+        <a 
+          href="https://www.bookswagon.com/promo/fiction-books/9D7S5K6U3M"
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <img
+            src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/icon5.png"
+            width="71px"
+            height="71px"
+            alt="Fictions Books"
+          /><br />
+          <span>Fictions Books</span>
+        </a>
+      </b-list-group-item>
+      <b-list-group-item class="col-2 d-flex align-items-center justify-content-center">
+        <a
+          href="https://www.bookswagon.com/promo/best-tarot-card-decks/9H1N7S3D0P"
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <img
+            src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/tarot.png"
+            width="71px"
+            height="71px"
+            alt="Tarot Cards"
+          /><br />
+          <span>Tarot Cards</span>
+        </a>
+      </b-list-group-item>
+      <b-list-group-item class="col-2 d-flex align-items-center justify-content-center">
+        <a
+          href="https://www.bookswagon.com/promo-best-seller/international-bestseller/6CDDFB86E08F"
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <img
+            src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/icon7.png"
+            width="71px"
+            height="71px"
+            alt="International Best Seller"
+          /><br />
+          <span class="text-center">International Best Seller</span>
+        </a>
+      </b-list-group-item>
+    </b-list-group>
     <b-carousel
       id="carousel-1"
       v-model="slide"
@@ -16,102 +116,82 @@
         <template #img>
           <b-row>
             <b-col cols="3">
-              <a
-                href="https://www.bookswagon.com/book/vagabond-vizbig-edition-vol-2/9781421522449"
-                title="Vagabond (Vizbig Edition), Vol. 2, 2"
-                class="d-flex justify-content-around"
-                ><img
-                  class="bklazy"
-                  src="https://d2g9wbak88g7ch.cloudfront.net/productimages/images200/449/9781421522449.jpg"
-                  data-src="https://d2g9wbak88g7ch.cloudfront.net/productimages/images200/449/9781421522449.jpg"
-                  onerror="handleInvalidImages(this,'mainimages')"
-                  alt="Vagabond (Vizbig Edition), Vol. 2, 2"
-                  width="200px"
-                  height="300px"
-              /></a>
-              <div class="position-absolute newtrendquick"><a class="quick-view themecolor" data-toggle="modal" data-target="#quickviewmodal" data-id="2949456">Quick View</a></div>
+              <HomeItemTrending :height="300"/>
             </b-col>
             <b-col cols="6">
               <b-row align-v="center" class="h-100 justify-content-around">
-                <b-col cols="3" class="d-flex justify-content-center">
-                  <a
-                    href="https://www.bookswagon.com/book/spy-x-family-vol-6/9781974725137"
-                    title="Spy X Family, Vol. 6"
-                    @mouseover="isShowQuickView = 1" @mouseout="isShowQuickView = 0"
-                    ><img
-                      class="bklazy"
-                      src="https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/137/9781974725137.jpg"
-                      data-src="https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/137/9781974725137.jpg"
-                      onerror="handleInvalidImages(this,'mainimages')"
-                      alt="Spy X Family, Vol. 6"
-                      width="125px"
-                      height="200px"
-                  /></a>
-                  <div v-if="isShowQuickView" class="position-absolute newtrendquick"><a class="quick-view themecolor" data-toggle="modal" data-target="#quickviewmodal" data-id="2949456">Quick View</a></div>
+                <b-col cols="3">
+                  <HomeItemTrending/>
                 </b-col>
-                <b-col cols="3" class="d-flex justify-content-center">
-                  <a
-                    href="https://www.bookswagon.com/book/spy-x-family-vol-6/9781974725137"
-                    title="Spy X Family, Vol. 6"
-                    @mouseover="isShowQuickView = 1" @mouseout="isShowQuickView = 0"
-                    ><img
-                      class="bklazy"
-                      src="https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/137/9781974725137.jpg"
-                      data-src="https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/137/9781974725137.jpg"
-                      onerror="handleInvalidImages(this,'mainimages')"
-                      alt="Spy X Family, Vol. 6"
-                      width="125px"
-                      height="200px"
-                  /></a>
-                  <div v-if="isShowQuickView" class="position-absolute newtrendquick"><a class="quick-view themecolor" data-toggle="modal" data-target="#quickviewmodal" data-id="2949456">Quick View</a></div>
+                <b-col cols="3">
+                  <HomeItemTrending/>
                 </b-col>
-                <b-col cols="3" class="d-flex justify-content-center">
-                  <a
-                    href="https://www.bookswagon.com/book/spy-x-family-vol-6/9781974725137"
-                    title="Spy X Family, Vol. 6"
-                    ><img
-                      class="bklazy"
-                      src="https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/137/9781974725137.jpg"
-                      data-src="https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/137/9781974725137.jpg"
-                      onerror="handleInvalidImages(this,'mainimages')"
-                      alt="Spy X Family, Vol. 6"
-                      width="125px"
-                      height="200px"
-                  /></a>
-                  <div class="position-absolute newtrendquick"><a class="quick-view themecolor" data-toggle="modal" data-target="#quickviewmodal" data-id="2949456">Quick View</a></div>
+                <b-col cols="3">
+                  <HomeItemTrending/>
                 </b-col>
-                <b-col cols="3" class="d-flex justify-content-center">
-                  <a
-                    href="https://www.bookswagon.com/book/spy-x-family-vol-6/9781974725137"
-                    title="Spy X Family, Vol. 6"
-                    ><img
-                      class="bklazy"
-                      src="https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/137/9781974725137.jpg"
-                      data-src="https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/137/9781974725137.jpg"
-                      onerror="handleInvalidImages(this,'mainimages')"
-                      alt="Spy X Family, Vol. 6"
-                      width="125px"
-                      height="200px"
-                  /></a>
-                  <div class="position-absolute newtrendquick"><a class="quick-view themecolor" data-toggle="modal" data-target="#quickviewmodal" data-id="2949456">Quick View</a></div>
+                <b-col cols="3">
+                  <HomeItemTrending/>
                 </b-col>
               </b-row>
             </b-col>
             <b-col cols="3">
-              <a
-                href="https://www.bookswagon.com/book/chainsaw-man-vol-8-tatsuki/9781974722785"
-                title="Chainsaw Man, Vol. 8"
-                class="d-flex justify-content-between"
-                ><img
-                  class="bklazy"
-                  src="https://d2g9wbak88g7ch.cloudfront.net/productimages/images200/785/9781974722785.jpg"
-                  data-src="https://d2g9wbak88g7ch.cloudfront.net/productimages/images200/785/9781974722785.jpg"
-                  onerror="handleInvalidImages(this,'mainimages')"
-                  alt="Chainsaw Man, Vol. 8"
-                  width="200px"
-                  height="300px"
-              /></a>
-              <div class="position-absolute newtrendquick"><a class="quick-view themecolor" data-toggle="modal" data-target="#quickviewmodal" data-id="2949456">Quick View</a></div>
+              <HomeItemTrending :height="300"/>
+            </b-col>
+          </b-row>
+        </template>
+      </b-carousel-slide>
+      <b-carousel-slide>
+        <template #img>
+          <b-row>
+            <b-col cols="3">
+              <HomeItemTrending :height="300"/>
+            </b-col>
+            <b-col cols="6">
+              <b-row align-v="center" class="h-100 justify-content-around">
+                <b-col cols="3">
+                  <HomeItemTrending/>
+                </b-col>
+                <b-col cols="3">
+                  <HomeItemTrending/>
+                </b-col>
+                <b-col cols="3">
+                  <HomeItemTrending/>
+                </b-col>
+                <b-col cols="3">
+                  <HomeItemTrending/>
+                </b-col>
+              </b-row>
+            </b-col>
+            <b-col cols="3">
+              <HomeItemTrending :height="300"/>
+            </b-col>
+          </b-row>
+        </template>
+      </b-carousel-slide>
+      <b-carousel-slide>
+        <template #img>
+          <b-row>
+            <b-col cols="3">
+              <HomeItemTrending :height="300"/>
+            </b-col>
+            <b-col cols="6">
+              <b-row align-v="center" class="h-100 justify-content-around">
+                <b-col cols="3">
+                  <HomeItemTrending/>
+                </b-col>
+                <b-col cols="3">
+                  <HomeItemTrending/>
+                </b-col>
+                <b-col cols="3">
+                  <HomeItemTrending/>
+                </b-col>
+                <b-col cols="3">
+                  <HomeItemTrending/>
+                </b-col>
+              </b-row>
+            </b-col>
+            <b-col cols="3">
+              <HomeItemTrending :height="300"/>
             </b-col>
           </b-row>
         </template>
@@ -122,38 +202,13 @@
 
 <script>
 export default {
-    data() {
-        return {
-            isShowQuickView: 0
-        }
-    },
+  data() {
+    return {
+      isShowQuickView: 0,
+    };
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.newtrendquick{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-.quick-view{
-    background-color: #fff;
-    border: 2px;
-}
-a.quick-view.themecolor {
-    border: 1px solid #d51912;
-    font-size: 13px;
-    padding: 2px 8px;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin-bottom: 2px;
-    position: absolute;
-    top: 3px;
-    width: 123px;
-    max-width: 90%;
-    left: 50%;
-    transform: translateX(-50%);
-    cursor: pointer;
-    text-align: center;
-}
 </style>
