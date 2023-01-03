@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('order_topping', function (Blueprint $table) {
+        Schema::create('category_products', function (Blueprint $table) {
             $table->id();
-            $table->integer('order_id')->nullable();
-            $table->integer('topping_id')->nullable();
-            $table->integer('quantity')->default(0);
+            $table->integer('product_id')->nullable();
+            $table->integer('category_id')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_topping');
+        Schema::dropIfExists('category_products');
     }
 };

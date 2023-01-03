@@ -31,6 +31,11 @@ Route::controller(ProductController::class)->prefix('/products')->group(function
 });
 Route::controller(CategoryController::class)->prefix('categories')->group(function () {
     Route::get('', 'index');
+    Route::post('', 'store');
+    Route::get('highest', 'getHighestCategory');
+    Route::get('{category_id}', 'show');
+    Route::get('{category_id}/child', 'getChildCategory');
+    Route::get('{category_id}/parent', 'getParentCategory');
     Route::controller(ProductController::class)->prefix('{category_id}/products')->group(function () {
         Route::get('', 'getProductByCategory');
     });

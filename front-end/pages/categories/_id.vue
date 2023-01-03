@@ -4,19 +4,9 @@
       <div class="category-column" style = "border-right: 1px solid #999">
         <h4 class="category-title">Browse Categories</h4>
         <ul class="list-group">
-          <li class="list-group-item"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon>Cras justo odio</li>
-          <li class="list-group-item second category-active"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon>Dapibus ac facilisis in</li>
-          <li class="list-group-item third"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon>Morbi leo risus</li>
-          <li class="list-group-item fourth"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon>Porta ac consectetur ac</li>
-          <li class="list-group-item fourth"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon>Porta ac consectetur ac</li>
-          <li class="list-group-item fourth"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon>Porta ac consectetur ac</li>
-          <li class="list-group-item fourth"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon>Porta ac consectetur ac</li>
-          <li class="list-group-item fourth"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon>Porta ac consectetur ac</li>
-          <li class="list-group-item fourth"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon>Porta ac consectetur ac</li>
-          <li class="list-group-item fourth"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon>Porta ac consectetur ac</li>
-          <li class="list-group-item fourth"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon>Porta ac consectetur ac</li>
-          <li class="list-group-item fourth"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon>Porta ac consectetur ac</li>
-          <li class="list-group-item fourth"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon>Porta ac consectetur ac</li>
+          <li :class="`list-group-item ${level[parent.level]}`" v-for="parent in parents" :key="parent.id"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon><nuxt-link :to="`/categories/${parent.id}`">{{parent.name}}</nuxt-link></li>
+          <li :class="`list-group-item category-active ${level[category.level]}`"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon><nuxt-link :to="`/categories/${category.id}`">{{category.name}}</nuxt-link></li>
+          <li :class="`list-group-item ${level[child.level]}`" v-for="child in children" :key="child.id"><b-icon class="icon" icon="caret-right-fill" aria-hidden="true"></b-icon><nuxt-link :to="`/categories/${child.id}`">{{child.name}}</nuxt-link></li>
         </ul>
       </div>
       <div class="book-column">
@@ -52,6 +42,9 @@
 export default {
   data() {
     return {
+      children: [],
+      category: {},
+      parents: [],
       breadcrumbs: [
         {
           text: "Home",
@@ -66,7 +59,38 @@ export default {
           href: "#",
         },
       ],
+      level: {
+        1 : 'first',
+        2 : 'second',
+        3 : 'third',
+        4 : 'fourth',
+      }
     };
+  },
+  methods: {
+    async fetchChildCategory() {
+      const response = await this.$axios.get(`/categories/${this.$route.params.id}/child`)
+      if (response.status === 200 && response.data) {
+        this.children = response.data.data
+      }
+    },
+    async fetchParentCategory() {
+      const response = await this.$axios.get(`/categories/${this.$route.params.id}/parent`)
+      if (response.status === 200 && response.data) {
+        this.parents = response.data.data
+      }
+    },
+    async fetchCategory() {
+      const response = await this.$axios.get(`/categories/${this.$route.params.id}`)
+      if (response.status === 200 && response.data) {
+        this.category = response.data.data
+      }
+    },
+  },
+  created () {
+    this.fetchParentCategory()
+    this.fetchCategory()
+    this.fetchChildCategory()
   },
 };
 </script>

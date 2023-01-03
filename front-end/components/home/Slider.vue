@@ -46,13 +46,4 @@ export default {
     background-color: #e42b26 !important;
     padding: 15px !important;
 }
-.list-group-nav{
-    width: 100%;
-    padding: 24px;
-    justify-content: center;
-    border-top: 2px solid #aeaeae;
-    border-bottom: 2px solid #aeaeae;
-    margin-top: 48px;
-    margin-bottom: 48px;
-}
 </style>

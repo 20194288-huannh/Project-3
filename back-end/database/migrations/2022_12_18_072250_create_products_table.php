@@ -24,6 +24,8 @@ return new class extends Migration
             $table->integer('sale')->nullable();
             $table->string('description_title')->nullable();
             $table->string('description')->nullable();
+            $table->string('shipping_time')->nullable();
+            $table->integer('shipping_cost')->nullable();
             $table->integer('product_detail_id')->nullable();
             $table->softDeletes();
             $table->timestamps();

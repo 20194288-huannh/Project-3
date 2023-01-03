@@ -1,7 +1,9 @@
 <template>
   <div>
-    <b-list-group horizontal class="list-group-nav">
-      <b-list-group-item class="col-2 d-flex align-items-center justify-content-center">
+    <b-list-group horizontal class="list-group-nav w-100">
+      <b-list-group-item
+        class="col-2 d-flex align-items-center justify-content-center"
+      >
         <a
           href="https://www.bookswagon.com/promo-best-seller/best-seller/03AC998EBDC2"
           class="d-flex flex-column justify-content-center align-items-center"
@@ -15,7 +17,9 @@
           <span>Best Seller</span>
         </a>
       </b-list-group-item>
-      <b-list-group-item class="col-2 d-flex align-items-center justify-content-center">
+      <b-list-group-item
+        class="col-2 d-flex align-items-center justify-content-center"
+      >
         <a
           href="https://www.bookswagon.com/promo-best-seller/award-winning/2109CDC4B4DC"
           class="d-flex flex-column justify-content-center align-items-center"
@@ -29,7 +33,9 @@
           <span>Award Winners</span>
         </a>
       </b-list-group-item>
-      <b-list-group-item class="col-2 d-flex align-items-center justify-content-center">
+      <b-list-group-item
+        class="col-2 d-flex align-items-center justify-content-center"
+      >
         <a
           href="https://www.bookswagon.com/promo-best-seller/box-sets/389DA2389287"
           class="d-flex flex-column justify-content-center align-items-center"
@@ -43,7 +49,9 @@
           <span>Box Sets</span>
         </a>
       </b-list-group-item>
-      <b-list-group-item class="col-2 d-flex align-items-center justify-content-center">
+      <b-list-group-item
+        class="col-2 d-flex align-items-center justify-content-center"
+      >
         <a
           href="https://www.bookswagon.com/promo-best-seller/new-arrivals/99325F010C89"
           class="d-flex flex-column justify-content-center align-items-center"
@@ -57,8 +65,10 @@
           <span>New Arrivals</span>
         </a>
       </b-list-group-item>
-      <b-list-group-item class="col-2 d-flex align-items-center justify-content-center">
-        <a 
+      <b-list-group-item
+        class="col-2 d-flex align-items-center justify-content-center"
+      >
+        <a
           href="https://www.bookswagon.com/promo/fiction-books/9D7S5K6U3M"
           class="d-flex flex-column justify-content-center align-items-center"
         >
@@ -71,7 +81,9 @@
           <span>Fictions Books</span>
         </a>
       </b-list-group-item>
-      <b-list-group-item class="col-2 d-flex align-items-center justify-content-center">
+      <b-list-group-item
+        class="col-2 d-flex align-items-center justify-content-center"
+      >
         <a
           href="https://www.bookswagon.com/promo/best-tarot-card-decks/9H1N7S3D0P"
           class="d-flex flex-column justify-content-center align-items-center"
@@ -85,7 +97,9 @@
           <span>Tarot Cards</span>
         </a>
       </b-list-group-item>
-      <b-list-group-item class="col-2 d-flex align-items-center justify-content-center">
+      <b-list-group-item
+        class="col-2 d-flex align-items-center justify-content-center"
+      >
         <a
           href="https://www.bookswagon.com/promo-best-seller/international-bestseller/6CDDFB86E08F"
           class="d-flex flex-column justify-content-center align-items-center"
@@ -116,26 +130,26 @@
         <template #img>
           <b-row>
             <b-col cols="3">
-              <HomeItemTrending :height="300"/>
+              <HomeItemTrending :height="300" />
             </b-col>
             <b-col cols="6">
               <b-row align-v="center" class="h-100 justify-content-around">
                 <b-col cols="3">
-                  <HomeItemTrending/>
+                  <HomeItemTrending />
                 </b-col>
                 <b-col cols="3">
-                  <HomeItemTrending/>
+                  <HomeItemTrending />
                 </b-col>
                 <b-col cols="3">
-                  <HomeItemTrending/>
+                  <HomeItemTrending />
                 </b-col>
                 <b-col cols="3">
-                  <HomeItemTrending/>
+                  <HomeItemTrending />
                 </b-col>
               </b-row>
             </b-col>
             <b-col cols="3">
-              <HomeItemTrending :height="300"/>
+              <HomeItemTrending :height="300" />
             </b-col>
           </b-row>
         </template>
@@ -144,26 +158,26 @@
         <template #img>
           <b-row>
             <b-col cols="3">
-              <HomeItemTrending :height="300"/>
+              <HomeItemTrending :height="300" />
             </b-col>
             <b-col cols="6">
               <b-row align-v="center" class="h-100 justify-content-around">
                 <b-col cols="3">
-                  <HomeItemTrending/>
+                  <HomeItemTrending />
                 </b-col>
                 <b-col cols="3">
-                  <HomeItemTrending/>
+                  <HomeItemTrending />
                 </b-col>
                 <b-col cols="3">
-                  <HomeItemTrending/>
+                  <HomeItemTrending />
                 </b-col>
                 <b-col cols="3">
-                  <HomeItemTrending/>
+                  <HomeItemTrending />
                 </b-col>
               </b-row>
             </b-col>
             <b-col cols="3">
-              <HomeItemTrending :height="300"/>
+              <HomeItemTrending :height="300" />
             </b-col>
           </b-row>
         </template>
@@ -172,26 +186,26 @@
         <template #img>
           <b-row>
             <b-col cols="3">
-              <HomeItemTrending :height="300"/>
+              <HomeItemTrending :height="300" />
             </b-col>
             <b-col cols="6">
               <b-row align-v="center" class="h-100 justify-content-around">
                 <b-col cols="3">
-                  <HomeItemTrending/>
+                  <HomeItemTrending />
                 </b-col>
                 <b-col cols="3">
-                  <HomeItemTrending/>
+                  <HomeItemTrending />
                 </b-col>
                 <b-col cols="3">
-                  <HomeItemTrending/>
+                  <HomeItemTrending />
                 </b-col>
                 <b-col cols="3">
-                  <HomeItemTrending/>
+                  <HomeItemTrending />
                 </b-col>
               </b-row>
             </b-col>
             <b-col cols="3">
-              <HomeItemTrending :height="300"/>
+              <HomeItemTrending :height="300" />
             </b-col>
           </b-row>
         </template>
@@ -211,4 +225,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.list-group-item {
+  border: none !important;
+}
+.list-group-nav {
+  width: 100%;
+  padding: 24px;
+  justify-content: center;
+  border-top: 2px solid #aeaeae;
+  border-bottom: 2px solid #aeaeae;
+  margin-top: 48px;
+  margin-bottom: 48px;
+}
 </style>

@@ -2,12 +2,12 @@
   <b-container fluid>
     <b-row class="p-3">
       <b-col cols="1">
-        <a href="">
+        <nuxt-link to="/">
           <b-img
             src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/logo-new.png"
             alt="Image 1"
           ></b-img>
-        </a>
+        </nuxt-link>
       </b-col>
       <b-col cols="6">
         <b-row class="justify-content-end">
@@ -55,22 +55,31 @@
         <b-navbar>
           <b-navbar-nav>
             <!-- Navbar dropdowns -->
-            <b-nav-item-dropdown text="Book" right>
-              <b-dropdown-item class="text-white" href="#">EN</b-dropdown-item>
-              <b-dropdown-item href="#">ES</b-dropdown-item>
-              <b-dropdown-item href="#">RU</b-dropdown-item>
-              <b-dropdown-item href="#">FA</b-dropdown-item>
+            <b-nav-item-dropdown text="Book" left>
+              <b-dropdown-item :href="`/categories/${category.id}`" class="book-category" v-for="category in categories" :key="category.id">{{category.name}}</b-dropdown-item>
             </b-nav-item-dropdown>
 
-            <b-nav-item href="#" class="text-white" variant="light"
-              >New Arrivals</b-nav-item
+            <b-nav-item href="#"
+              ><nuxt-link to="/promo/id">New Arrivals</nuxt-link></b-nav-item
             >
-            <b-nav-item href="#">Box Sets</b-nav-item>
-            <b-nav-item href="#">Best sellers</b-nav-item>
-            <b-nav-item href="#">Fiction Books</b-nav-item>
-            <b-nav-item href="#">Award Winners</b-nav-item>
-            <b-nav-item href="#">Feature Authors</b-nav-item>
-            <b-nav-item href="#">Request a book</b-nav-item>
+            <b-nav-item href="#"
+              ><nuxt-link to="/promo/id">Box Sets</nuxt-link></b-nav-item
+            >
+            <b-nav-item href="#"
+              ><nuxt-link to="/promo/id">Best sellers</nuxt-link></b-nav-item
+            >
+            <b-nav-item href="#"
+              ><nuxt-link to="/promo/id">Fiction Books</nuxt-link></b-nav-item
+            >
+            <b-nav-item href="#"
+              ><nuxt-link to="/promo/id">Award Winners</nuxt-link></b-nav-item
+            >
+            <b-nav-item href="#"
+              ><nuxt-link to="/promo/id">Feature Authors</nuxt-link></b-nav-item
+            >
+            <b-nav-item href="#"
+              ><nuxt-link to="/promo/id">Request a book</nuxt-link></b-nav-item
+            >
           </b-navbar-nav>
         </b-navbar>
       </b-col>
@@ -85,7 +94,7 @@
     </b-row>
   </b-container>
 </template>
-<style scoped>
+<style lang="css" scoped>
 .btn-search {
   background: #e42b26
     url("https://www.bookswagon.com/images/svg/search-solid.svg") no-repeat
@@ -109,14 +118,38 @@
 .backgrourd-navbar {
   background: #d51912;
 }
-.nav-link {
+.nav-link a {
   color: #fff !important;
   padding: 11px 15px !important;
   font-size: 16px;
   line-height: 30px;
 }
-.navbar{
+.navbar {
   padding: 0 0 0 15px;
+}
+.book-category {
+  font-style: italic !important;
+  font-weight: 700 !important;
+  color: red !important;
+}
+
+.book-category a.dropdown-item {
+  color: red !important;
+}
+.categories{
+  
+  overflow-y: auto !important;
+  max-height: 100px !important;
+}
+a.dropdown-item{
+  font-weight: 700 !important;
+  color: #676767 !important;
+}
+.dropdown-menu li:hover {
+  border-left: 4px solid #d51912;
+}
+.dropdown-menu li:hover .dropdown-item {
+  color: #d51912 !important;
 }
 </style>
 <script>
@@ -125,13 +158,25 @@
 export default {
   // middleware: ['authenticated'],
   data() {
-    return {};
+    return {
+      categories: [],
+    };
   },
   computed: {},
+  created () {
+    this.fetchCategories();
+  },
   methods: {
     logout() {
       // await this.$auth.logout()
       // this.$router.push('/login')
+    },
+    async fetchCategories(){
+      const response = await this.$axios.get(`/categories/highest`)
+      if (response.status === 200 && response.data) {
+        this.categories = response.data.data
+        console.log(this.categories)
+      }
     },
   },
 };
