@@ -21,7 +21,6 @@ class ToppingResource extends JsonResource
             'quantity' => $this->quantity,
             'create_at' => $this->create_at,
             'update_at' => $this->update_at,
-
         ];
     }
 }

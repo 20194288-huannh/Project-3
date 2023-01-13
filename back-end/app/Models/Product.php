@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $guarded = [];
     const STATUS_AVAILABLE = 1;
     const STATUS_INTERNATIONAL_EDITION = 1;
 
@@ -23,5 +24,9 @@ class Product extends Model
     public function cart()
     {
         return $this->hasOne(Cart::class);
+    }
+    public function productDetail()
+    {
+        return $this->hasOne(ProductDetail::class, 'product_id');
     }
 }
