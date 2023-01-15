@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
@@ -28,6 +29,7 @@ Route::controller(UserController::class)->prefix('/users')->group(function () {
 });
 Route::controller(ProductController::class)->prefix('/products')->group(function () {
     Route::get('', 'index');
+    Route::get('{id}', 'show');
 });
 Route::controller(CategoryController::class)->prefix('categories')->group(function () {
     Route::get('', 'index');
@@ -47,4 +49,7 @@ Route::controller(CartController::class)->prefix('/carts')->group(function () {
 Route::controller(OrderController::class)->prefix('/orders')->group(function () {
     Route::get('', 'index');
     Route::post('', 'store');
+});
+Route::controller(AuthorController::class)->prefix('/authors')->group(function () {
+    Route::get('', 'index');
 });

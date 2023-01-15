@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -15,8 +16,8 @@ class ProductController extends ApiController
      */
     public function index()
     {
-        $product = Product::all();
-        return $this->response(['success' => true, 'data' => ProductResource::collection($product)]);
+        $product = Product::paginate();
+        return $this->response(['success' => true, 'data' => new ProductCollection($product)]);
     }
 
     /**
@@ -48,7 +49,8 @@ class ProductController extends ApiController
      */
     public function show($id)
     {
-        //
+        $product = Product::with('productDetail')->find($id);
+        return $this->response(['success' => true, 'data' => new ProductResource($product)]);
     }
 
     /**

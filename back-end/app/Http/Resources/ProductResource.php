@@ -18,7 +18,8 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'category' => new CategoryResource($this->category),
+            'image' => $this->image,
+            'category' => CategoryResource::collection($this->category),
             'status' => $this->status,
             'author' => $this->author,
             'type' => $this->type,
@@ -26,7 +27,7 @@ class ProductResource extends JsonResource
             'description_title' => $this->description_title,
             'description' => $this->description,
             'shipping_time' => $this->shipping_time,
-            '$shipping_cost' => $this->shipping_cost,
+            'shipping_cost' => $this->shipping_cost,
             'price' => $this->price,
             'quantity' => $this->quantity,
             'product_detail' => new ProductDetailResource($this->productDetail),

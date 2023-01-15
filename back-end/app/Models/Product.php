@@ -17,9 +17,9 @@ class Product extends Model
     const TYPE_HARD_COVER = 2;
     const TYPE_HARD_BACK = 3;
     const TYPE_CALENDAR = 4;
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);
     }
     public function cart()
     {
