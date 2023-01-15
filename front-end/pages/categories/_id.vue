@@ -28,11 +28,7 @@
             </b-dropdown>
           </div>
         </div>
-        <HorizontalBook />
-        <HorizontalBook />
-        <HorizontalBook />
-        <HorizontalBook />
-        <HorizontalBook />
+        <HorizontalBook v-for="book in books" :key="book.id" :book="book"/>
       </div>
     </div>
   </b-container>
@@ -45,6 +41,7 @@ export default {
       children: [],
       category: {},
       parents: [],
+      books: [],
       breadcrumbs: [
         {
           text: "Home",
@@ -86,11 +83,19 @@ export default {
         this.category = response.data.data
       }
     },
+    async fetchBooks() {
+      const response = await this.$axios.get(`/categories/${this.$route.params.id}/products`)
+      if (response.status === 200 && response.data) {
+        this.books = response.data.data
+        console.log(this.books)
+      }
+    }
   },
   created () {
     this.fetchParentCategory()
     this.fetchCategory()
     this.fetchChildCategory()
+    this.fetchBooks()
   },
 };
 </script>

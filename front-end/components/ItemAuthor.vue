@@ -1,27 +1,32 @@
 <template>
   <b-row class="pt-5 pb-5 pr-3 pl-3" style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
     <b-col cols="2">
-      <a href="https://www.bookswagon.com/author/arundhati-roy"
+      <nuxt-link :to="`authors/${author?.id}`"
         ><img
-          src="https://d2g9wbak88g7ch.cloudfront.net/authorimages/arundhatistory_647_100316054702.jpg"
+          :src="author?.image"
           alt="Arundhati Roy"
           class="rounded-circle"
-      /></a>
+          width="90"
+          height="90"
+      /></nuxt-link>
     </b-col>
     <b-col cols="10" class="d-flex flex-column">
-      <span class="author-name">Arundhati Roy</span>
+      <span class="author-name">{{author?.name}}</span>
       <p>
-        Arundhati Roy is an Indian writer, best known for her book The God of
-        Small Things (1997), which won the Man Booker Prize for Fiction in 1997.
-        She was born in Shillong, Meghalaya, India. Her parents were Rajib Roy,
-        a Bengali Hindu tea plantation Read More
+        {{author?.description}}
       </p>
     </b-col>
   </b-row>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    author: {
+      type: Object, 
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

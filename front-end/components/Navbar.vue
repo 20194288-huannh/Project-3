@@ -75,7 +75,7 @@
               ><nuxt-link to="/promo/id">Award Winners</nuxt-link></b-nav-item
             >
             <b-nav-item href="#"
-              ><nuxt-link to="/promo/id">Feature Authors</nuxt-link></b-nav-item
+              ><nuxt-link to="/authors">Feature Authors</nuxt-link></b-nav-item
             >
             <b-nav-item href="#"
               ><nuxt-link to="/promo/id">Request a book</nuxt-link></b-nav-item

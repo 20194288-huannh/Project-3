@@ -12,9 +12,14 @@ Vue.filter('startCase', (str) => {
   return str
 })
 
-Vue.filter('formatDate', (value, format = 'DD/MM/YYYY') => {
+Vue.filter('formatDate', (value) => {
   if (!value) return ''
-  return moment(value).format(format)
+  const objDate = new Date(value);
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  if (objDate !== 'Invalid Date' && !isNaN(objDate)) {
+    return (objDate.getDate() + ' ' + months[objDate.getMonth()] + ' ' + objDate.getFullYear())
+  }
+  return value;
 })
 
 Vue.component('star-rating', VueStarRating);

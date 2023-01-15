@@ -3,21 +3,21 @@
     <b-col cols="6">
       <b-row class="content" >
         <b-col cols="3">
-          <a
-            href="https://www.bookswagon.com/book/sapiens-yuval-noah-harari/9780099590088"
+          <nuxt-link
+            :to="`/books/${book.id}`"
             ><img
-              src="https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/088/9780099590088.jpg"
+              :src="book.image"
               alt="Sapiens"
               height="150"
               width="100"
-          /></a>
+          /></nuxt-link>
         </b-col>
         <b-col cols="9" class="d-flex  flex-column">
-            <a href=""><span class="title">Sapiens</span></a>
-            <span><strong>By: </strong><a href="">Yuval Noah Harari</a></span>
+            <a href=""><span class="title">{{book.name}}</span></a>
+            <span><strong>By: </strong><a href="">{{book.author}}</a></span>
             <b-row>
                 <b-col cols="3" class="mt-2 price">
-                    <span class="text-muted actual-price">₹599</span>
+                    <span class="text-muted actual-price">₹{{book.price}}</span>
                     <span class="text-danger sell">₹419</span>
                 </b-col>
                 <b-col cols="9" class="mt-2 d-flex flex-row-reverse">
@@ -28,9 +28,9 @@
                             <span>Language: </span>
                         </b-col>
                         <b-col cols="6" class="d-flex flex-column" style="font-size: 13px">
-                            <span>Paperback</span>
-                            <span>05 May 2016</span>
-                            <span>English </span>
+                            <span>{{book.product_detail?.binding}}</span>
+                            <span>{{book.product_detail?.publisher_date | formatDate}}</span>
+                            <span>{{book.product_detail?.language}} </span>
                         </b-col>
                     </b-row>
                 </b-col>
@@ -40,8 +40,9 @@
     </b-col>
     <b-col cols="6" class="buy">
         <span class="status">International Edition</span>
-        <span>Ships within <strong>14-16 Days </strong> Explain..</span>
-        <span>Free Shipping in India and low cost Worldwide.</span>
+        <span>Ships within <strong>{{book.shipping_time}} </strong> Explain..</span>
+        <span v-if="book.shipping_cost">{{book.shipping_cost}} Shipping in India and low cost Worldwide.</span>
+        <span v-else>Free Shipping in India and low cost Worldwide.</span>
         <div class="mt-2">
             <b-button variant="danger" class="font-weight-bold">Buy Now</b-button>
             <b-button variant="dark" class="font-weight-bold">Add to Wishlist</b-button>
@@ -51,7 +52,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+    props: {
+        book: {
+            type: Object,
+        },
+    },
+};
 </script>
 
 <style lang="scss" scoped>

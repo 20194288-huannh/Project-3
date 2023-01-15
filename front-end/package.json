@@ -24,7 +24,9 @@
     "vue-server-renderer": "^2.7.10",
     "vue-star-rating": "^1.7.0",
     "vue-sweetalert2": "^5.0.5",
-    "vue-template-compiler": "^2.7.10"
+    "vue-template-compiler": "^2.7.10",
+    "vue2-transitions": "^0.2.3",
+    "vue-chartjs": "^3.4.0"
   },
   "devDependencies": {
     "sass": "^1.57.1",
