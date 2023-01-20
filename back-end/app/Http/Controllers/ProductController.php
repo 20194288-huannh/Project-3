@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
+use App\Models\Category;
 use App\Models\Product;
+use App\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 
 class ProductController extends ApiController
 {
+    private $categoryRepo;
+    public function __construct(CategoryRepository $categoryRepo)
+    {
+        $this->categoryRepo = $categoryRepo;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +23,7 @@ class ProductController extends ApiController
      */
     public function index()
     {
-        $product = Product::paginate();
+        $product = Product::latest()->paginate();
         return $this->response(['success' => true, 'data' => new ProductCollection($product)]);
     }
 
@@ -88,7 +95,9 @@ class ProductController extends ApiController
     }
 
     public function getProductByCategory(int $category_id) {
-        $products = Product::where('category_id', $category_id)->orderBy('name', 'ASC')->paginate();
+        $categories_ids = $this->categoryRepo->getSubcategoriesIds(Category::with('subcategories')->where('id', $category_id)->first());
+        info($categories_ids);
+        $products = Product::whereIn('category_id', $categories_ids)->orderBy('name', 'ASC')->paginate();
         return $this->response(['success' => true, 'data' => ProductResource::collection($products)]);
     }
 }

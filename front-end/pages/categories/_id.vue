@@ -12,7 +12,7 @@
       <div class="book-column">
         <b-breadcrumb :items="breadcrumbs"></b-breadcrumb>
         <div class="d-flex justify-content-between pb-3">
-          <h5 class="font-weight-bold">Architecture</h5>
+          <h5 class="font-weight-bold">{{category.name}}</h5>
           <div>
             <span class="font-weight-bold">Sort By: </span>
             <b-dropdown
@@ -42,20 +42,7 @@ export default {
       category: {},
       parents: [],
       books: [],
-      breadcrumbs: [
-        {
-          text: "Home",
-          href: "#",
-        },
-        {
-          text: "Arts & Photography",
-          href: "#",
-        },
-        {
-          text: "Architecture",
-          href: "#",
-        },
-      ],
+      breadcrumbs: [],
       level: {
         1 : 'first',
         2 : 'second',
@@ -63,6 +50,8 @@ export default {
         4 : 'fourth',
       }
     };
+  },
+  computed: {
   },
   methods: {
     async fetchChildCategory() {
@@ -87,15 +76,22 @@ export default {
       const response = await this.$axios.get(`/categories/${this.$route.params.id}/products`)
       if (response.status === 200 && response.data) {
         this.books = response.data.data
-        console.log(this.books)
       }
     }
   },
-  created () {
-    this.fetchParentCategory()
-    this.fetchCategory()
-    this.fetchChildCategory()
+  async created () {
+    await this.fetchParentCategory()
+    await this.fetchCategory()
+    await this.fetchChildCategory()
     this.fetchBooks()
+    this.breadcrumbs = this.parents.map(function ({id, name}) {
+      return {
+        text: name,
+        to: { name: `categories/${id}`}
+      }
+    })
+    this.breadcrumbs.push({text: this.category.name, to: {name: `categories/${this.category.id}`}});
+    console.log(this.breadcrumbs)
   },
 };
 </script>

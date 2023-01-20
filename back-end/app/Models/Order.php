@@ -21,14 +21,6 @@ class Order extends Model
     {
         return $this->belongsTo(Voucher::class, 'voucher_id');
     }
-    public function voucher_shipping()
-    {
-        return $this->belongsTo(Voucher::class, 'voucher_shipping_id');
-    }
-    public function topping()
-    {
-        return $this->belongsToMany(Topping::class);
-    }
     public function product()
     {
         return $this->belongsTo(Product::class);

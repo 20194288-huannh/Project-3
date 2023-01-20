@@ -33,7 +33,7 @@ class CategoryController extends ApiController
         $category = Category::find($category_id);
         $parents = [];
         $parent = $category;
-        for ($i = 1; $i < $category->level; $i++ ) {
+        for ($i = 1; $i < $category->level; $i++) {
             $parent = Category::find($parent->parent_id);
             array_unshift($parents, $parent);
         }

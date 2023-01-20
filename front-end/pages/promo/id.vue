@@ -78,19 +78,7 @@
           </div>
         </div>
         <div class="grid-container">
-          <VerticalBook class="item"/>
-          <VerticalBook class="item"/>
-          <VerticalBook class="item"/>
-          <VerticalBook class="item"/>
-          <VerticalBook class="item"/>
-          <VerticalBook class="item"/>
-          <VerticalBook class="item"/>
-          <VerticalBook class="item"/>
-          <VerticalBook class="item"/>
-          <VerticalBook class="item"/>
-          <VerticalBook class="item"/>
-          <VerticalBook class="item"/>
-          <VerticalBook class="item"/>
+          <VerticalBook class="item" v-for="book in books" :key="book.id" :book="book"/>
         </div>
       </b-col>
     </b-row>
@@ -101,6 +89,7 @@
 export default {
   data() {
     return {
+      books: [],
       maxPrice: 50000,
       minPrice: 0,
       minDiscount: 0,
@@ -127,6 +116,15 @@ export default {
       this.minDiscount = e.minValue;
       this.maxDiscount = e.maxValue;
     },
+    async fetchBooks() {
+      const response = await this.$axios.get(`/categories/20/products`)
+      if (response.status === 200 && response.data) {
+        this.books = response.data.data
+      }
+    },
+  },
+  created () {
+    this.fetchBooks();
   },
 };
 </script>

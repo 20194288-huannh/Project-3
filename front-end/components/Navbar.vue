@@ -175,7 +175,6 @@ export default {
       const response = await this.$axios.get(`/categories/highest`)
       if (response.status === 200 && response.data) {
         this.categories = response.data.data
-        console.log(this.categories)
       }
     },
   },

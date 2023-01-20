@@ -11,7 +11,7 @@
       >
         <b-card-img
           img-top
-          src="https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/894/9788172344894.jpg"
+          :src="book?.image || 'https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/notavailable.gif' "
           alt="Wuthering Heights"
         />
       </a>
@@ -25,13 +25,13 @@
           >Quick View</a
         >
         <b-card-text>
-          <span class="booktitle font-weight-bold text-center"
-            >Wuthering Heights</span
+          <span class="booktitle font-weight-bold text-center" v-if="book?.name"
+            >{{book.name}}</span
           >
-          <span class="author authortextcolor">Emily Brontë</span>
+          <span class="author authortextcolor" v-if="book?.author">{{book.author}}</span>
           <div class="d-flex justify-content-center">
-            <span class="actualprice themecolor font-weight-bold">₹119</span>
-            <span class="initialprice"><del>₹199</del></span>
+            <span class="actualprice themecolor font-weight-bold" v-if="book?.price">₹{{book.price}}</span>
+            <span class="initialprice"><del>₹{{salePrice}}</del></span>
           </div>
         </b-card-text>
       </div>
@@ -41,10 +41,20 @@
 
 <script>
 export default {
+  props: {
+    book: {
+      type: Object,
+    },
+  },
   data() {
     return {
       isShowQuickView: 0,
     };
+  },
+  computed: {
+    salePrice() {
+      return Math.floor(this.book?.price * Math.random())
+    }
   },
 };
 </script>

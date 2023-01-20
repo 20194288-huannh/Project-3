@@ -22,13 +22,25 @@
             ></b-form-input>
           </b-form-group>
           <div class="d-flex justify-content-end mb-3">
-            <span class="text-danger font-weight-bold">Forgot your Password?</span>
+            <span class="text-danger font-weight-bold"
+              >Forgot your Password?</span
+            >
           </div>
-          <b-button type="submit" block variant="danger" class="mb-5">Login</b-button>
+          <b-button type="submit" block variant="danger" class="mb-5"
+            >Login</b-button
+          >
         </b-form>
         <div class="d-flex flex-column">
-          <span class="text-danger text-center mb-3">New to Bookswagon? Sign up</span>
-          <span class="text-center">By continuing, I agree to the <span class="text-danger font-weight-bold"> Terms of Use </span> &  <span class="text-danger font-weight-bold">Privacy Policy</span></span>
+          <span class="text-danger text-center mb-3"
+            >New to Bookswagon? Sign up</span
+          >
+          <span class="text-center"
+            >By continuing, I agree to the
+            <span class="text-danger font-weight-bold"> Terms of Use </span> &
+            <span class="text-danger font-weight-bold"
+              >Privacy Policy</span
+            ></span
+          >
         </div>
       </div>
     </div>
@@ -66,42 +78,40 @@
   margin: 25px auto;
   text-align: center;
 }
-.none-margin-bottom{
+.none-margin-bottom {
   margin-bottom: 0px !important;
 }
 </style>
 <script>
 export default {
   head: {
-    meta: [
-      {charset: 'utf-8'},
-      {name: 'robots', content: 'noindex'},
-    ],
+    meta: [{ charset: "utf-8" }, { name: "robots", content: "noindex" }],
   },
   data() {
     return {
       form: {
-        email: '',
-        password: '',
+        email: "",
+        password: "",
       },
-    }
+    };
   },
   methods: {
     async login() {
       try {
-        this.$nextTick(() => {
-          this.$nuxt.$loading.start()
+        const res = await this.$auth.loginWith("local", {
+          data: this.form
         })
-        const response = await this.POST('/login', this.form);
-        console.log('response: ', response)
+        this.$toast.success("Logged In!")
+        await this.$auth.setToken('local', "Bearer " + res.authorisation.token)
+        await this.$auth.setUserToken(response.authorisation.token)
+
+        this.$router.push({
+          path: this.$route.query.redirect || "/"
+        })
       } catch (e) {
         console.log(e);
-      } finally {
-        this.$nextTick(() => {
-          this.$nuxt.$loading.finish()
-        })
       }
     },
-  }
-}
+  },
+};
 </script>

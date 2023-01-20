@@ -13,4 +13,10 @@ class OrderController extends ApiController
         $orders = Order::paginate();
         return $this->response(['message' => 'success', 'data' => OrderResource::collection($orders)]);
     }
+    public function store(Request $request)
+    {
+        $order = Order::create([
+            'user_id' => auth()->user()->id,
+        ]);
+    }
 }
