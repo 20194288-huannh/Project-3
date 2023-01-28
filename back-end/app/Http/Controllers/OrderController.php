@@ -43,6 +43,12 @@ class OrderController extends ApiController
         ]);
         return $this->responseOk(new OrderResource($order));
     }
+    public function destroy($id)
+    {
+        info($id);
+        $order = Order::find($id)->delete();
+        return $this->responseOk(new OrderResource($order));
+    }
     public function getOrderByUser()
     {
         $orders = Order::where('user_id', auth()->user()->id)->latest()->paginate();
