@@ -16,12 +16,13 @@ class OrderResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'user_id' => $this->user_id,
             'user' => $this->user ? new UserResource($this->user) : null,
+            'product_id' => $this->product_id,
+            'product' => $this->product_id ? new ProductResource($this->product) : null,
             'voucher' => $this->voucher ? new VoucherResource($this->voucher) : null,
-            'voucher_shipping' => $this->voucher_shipping ? new VoucherResource($this->voucher_shipping) : null,
             'quantity' => $this->quantity,
             'size' => $this->size,
-            'topping' => ToppingResource::collection($this->topping),
             'status' => $this->status,
             'create_at' => $this->create_at,
             'update_at' => $this->update_at,

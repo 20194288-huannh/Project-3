@@ -44,7 +44,7 @@
         <span v-if="book.shipping_cost">{{book.shipping_cost}} Shipping in India and low cost Worldwide.</span>
         <span v-else>Free Shipping in India and low cost Worldwide.</span>
         <div class="mt-2">
-            <b-button variant="danger" class="font-weight-bold">Buy Now</b-button>
+            <b-button variant="danger" class="font-weight-bold" @click="buy">Buy Now</b-button>
             <b-button variant="dark" class="font-weight-bold">Add to Wishlist</b-button>
         </div>
     </b-col>
@@ -57,6 +57,18 @@ export default {
         book: {
             type: Object,
         },
+    },
+    methods: {
+        async buy() {
+            if (this.$auth.loggedIn) {
+                const response = await this.$axios.post(`/orders`, {product_id: this.book.id})
+                if (response.status === 200 && response.data) {
+                    this.$emit('showOrdersModal')
+                }
+            } else {
+                this.$router.push('/login')
+            }
+        }
     },
 };
 </script>

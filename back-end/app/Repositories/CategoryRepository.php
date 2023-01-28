@@ -22,7 +22,6 @@ class CategoryRepository
     }
     public function getChildren($subcategories) {
         $array = array();
-        info($subcategories);
         foreach ($subcategories as $subcategory)  {
             array_push($array, $subcategory->id);
             if(count($subcategory->subcategories)){

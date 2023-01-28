@@ -104,10 +104,10 @@ export default {
         this.$toast.success("Logged In!")
         await this.$auth.setToken('local', "Bearer " + res.authorisation.token)
         await this.$auth.setUserToken(response.authorisation.token)
-
-        this.$router.push({
-          path: this.$route.query.redirect || "/"
-        })
+        if (this.$store.state.user.role == 1) {
+          this.$router.push('/admin/books')
+        }
+        this.$router.go(-1)
       } catch (e) {
         console.log(e);
       }

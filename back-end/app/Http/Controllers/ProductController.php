@@ -96,7 +96,6 @@ class ProductController extends ApiController
 
     public function getProductByCategory(int $category_id) {
         $categories_ids = $this->categoryRepo->getSubcategoriesIds(Category::with('subcategories')->where('id', $category_id)->first());
-        info($categories_ids);
         $products = Product::whereIn('category_id', $categories_ids)->orderBy('name', 'ASC')->paginate();
         return $this->response(['success' => true, 'data' => ProductResource::collection($products)]);
     }

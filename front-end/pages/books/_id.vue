@@ -110,7 +110,6 @@ export default {
         const response = await this.$axios.get(`/products/${this.$route.params.id}`)
         if (response.status === 200 && response.data) {
           this.book = response.data.data
-          console.log(this.book)
         }
       }
       catch (e) {

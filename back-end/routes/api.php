@@ -54,6 +54,7 @@ Route::get('user', [UserController::class, 'profile']);
     Route::controller(OrderController::class)->prefix('/orders')->group(function () {
         Route::get('', 'index');
         Route::post('', 'store');
+        Route::get('all', 'getOrderByUser');
     });
     Route::controller(AuthorController::class)->prefix('/authors')->group(function () {
         Route::get('', 'index');

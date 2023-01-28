@@ -24,7 +24,6 @@ class Crawl
             function (Crawler $node) {
                 $name = $node->filter('span.headingtext')->text();
                 $image = $node->filter('img')->attr('src');
-                info($image);
                 $description = $node->filter('#aboutbook p span')->text();
                 $author = $node->filter('.authordetailtext label:nth-child(1) a')->text();
                 $publisher = $node->filter('.authordetailtext label:nth-child(11) a')->text();
@@ -74,7 +73,6 @@ class Crawl
                 unset($data['series_title']);
                 unset($data['sub_title']);
                 unset($data['depth']);
-                info($data);
                 // $publisher = $node->filter('div:nth-child(2) ul li:nth-child(2)')->text();
                 // $publisher = explode(': ', $publisher)[1];
                 // $binding = $node->filter('div:nth-child(2) ul li:nth-child(3)')->text();
