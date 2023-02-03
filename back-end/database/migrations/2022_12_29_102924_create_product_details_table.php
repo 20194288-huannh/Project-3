@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('product_details', function (Blueprint $table) {
             $table->id();
             $table->string('code')->nullable();
+            $table->string('isbn_10')->nullable();
+            $table->string('isbn_13')->nullable();
             $table->string('publisher')->nullable();
             $table->date('publisher_date')->nullable();
             $table->string('publisher_imprint')->nullable();
@@ -27,6 +29,9 @@ return new class extends Migration
             $table->string('spine_width')->nullable();
             $table->integer('weight')->nullable();
             $table->integer('width')->nullable();
+            $table->string('series_title')->nullable();
+            $table->string('sub_title')->nullable();
+            $table->string('depth')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

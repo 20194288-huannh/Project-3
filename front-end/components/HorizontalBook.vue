@@ -13,7 +13,7 @@
           /></nuxt-link>
         </b-col>
         <b-col cols="9" class="d-flex  flex-column">
-            <a href=""><span class="title">{{book.name}}</span></a>
+            <nuxt-link :to="`/books/${book.id}`"><span class="title">{{book.name}}</span></nuxt-link>
             <span><strong>By: </strong><a href="">{{book.author}}</a></span>
             <b-row>
                 <b-col cols="3" class="mt-2 price">

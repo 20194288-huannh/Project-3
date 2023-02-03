@@ -1,55 +1,128 @@
 <template>
-    <div v-if="loading" class="loading-page">
-      <div class="loading"></div>
+  <section v-if="loading">
+    <div class="loader loader-1">
+      <div class="loader-outter"></div>
+      <div class="loader-inner"></div>
     </div>
-  </template>
-  <script>
-    export default {
-      data: () => ({
-        loading: false,
-      }),
-      methods: {
-        start() {
-          this.loading = true
-        },
-        finish() {
-          this.loading = false
-        },
-      },
+  </section>
+</template>
+<script>
+export default {
+  data: () => ({
+    loading: false,
+  }),
+  methods: {
+    start() {
+      this.loading = true;
+    },
+    finish() {
+      this.loading = false;
+    },
+  },
+};
+</script>
+<style scoped>
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  text-align: center;
+}
+
+section {
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  height: 100vh;
+  align-items: center;
+  display: flex;
+  z-index: 2000;
+  flex-direction: column;
+  justify-content: center;
+  background: #fff;
+}
+.loader {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 75px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.loader-1 .loader-outter {
+  position: absolute;
+  border: 4px solid #f50057;
+  border-left-color: transparent;
+  border-bottom: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -webkit-animation: loader-1-outter 1s cubic-bezier(0.42, 0.61, 0.58, 0.41)
+    infinite;
+  animation: loader-1-outter 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+}
+
+.loader-1 .loader-inner {
+  position: absolute;
+  border: 4px solid #f50057;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  left: calc(50% - 20px);
+  top: calc(50% - 20px);
+  border-right: 0;
+  border-top-color: transparent;
+  -webkit-animation: loader-1-inner 1s cubic-bezier(0.42, 0.61, 0.58, 0.41)
+    infinite;
+  animation: loader-1-inner 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+}
+@-webkit-keyframes loader-1-outter {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
     }
-  </script>
-  <style scoped>
-    .loading-page {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 22222;
-      padding: 1rem;
-      text-align: center;
-      font-size: 3rem;
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: #adb5bd;
-      width: 100%;
-      height: 100vh;
-      opacity: 0.5;
+    
+    @keyframes loader-1-outter {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
     }
-    .loading {
-      display: inline-block;
-      width: 3rem;
-      height: 3rem;
-      border: 7px solid #f36e20ad;
-      border-radius: 50%;
-      border-top-color: #f36e20;
-      animation: spin 1s ease-in-out infinite;
+    
+    @-webkit-keyframes loader-1-inner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+        }
     }
-    @keyframes spin {
-      to {
-        -webkit-transform: rotate(360deg);
-      }
+    
+    @keyframes loader-1-inner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+        }
     }
-  </style>
-  
+</style>

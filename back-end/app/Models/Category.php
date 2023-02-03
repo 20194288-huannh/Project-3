@@ -12,7 +12,7 @@ class Category extends Model
     protected $guarded = [];
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class, 'category_products');
     }
 
     public function children()

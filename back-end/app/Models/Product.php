@@ -19,7 +19,7 @@ class Product extends Model
     const TYPE_CALENDAR = 4;
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'category_products');
     }
     public function cart()
     {

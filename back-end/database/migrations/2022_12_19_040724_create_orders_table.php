@@ -18,7 +18,6 @@ return new class extends Migration
             $table->integer('user_id')->nullable();
             $table->integer('product_id')->nullable();
             $table->integer('voucher_id')->nullable();
-            $table->integer('voucher_shipping_id')->nullable();
             $table->integer('cart_id')->nullable();
             $table->integer('quantity')->default(0);
             $table->integer('size')->nullable();
