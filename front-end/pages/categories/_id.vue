@@ -92,7 +92,7 @@
           >
             Add to Wishlist
           </b-button>
-          <b-button size="sm" variant="link" @click="remove"> Remove </b-button>
+          <b-button size="sm" variant="link" @click="remove(row.item.id)"> Remove </b-button>
         </template>
         <template #cell(id)="row">
           <span>{{row.item.product.id}}</span>
@@ -193,6 +193,15 @@ export default {
       this.$bvModal.show("bv-modal-order");
       this.fetchOrders();
     },
+    async remove(id) {
+      const response = await this.$axios.post(`/orders/${id}/delete`)
+      if (response.status === 200 && response.data) {
+        this.$toast.success("Remove order success!")
+        this.fetchOrders()
+      } else {
+        this.$toast.error("Fail")
+      }
+    }
   },
   async created() {
     await this.fetchParentCategory();

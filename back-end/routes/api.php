@@ -55,6 +55,7 @@ Route::get('user', [UserController::class, 'profile']);
         Route::get('', 'index');
         Route::post('', 'store');
         Route::get('all', 'getOrderByUser');
+        Route::post('{id}/delete', 'destroy');
     });
     Route::controller(AuthorController::class)->prefix('/authors')->group(function () {
         Route::get('', 'index');

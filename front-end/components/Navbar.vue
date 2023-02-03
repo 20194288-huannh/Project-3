@@ -27,7 +27,7 @@
       <b-col cols="5">
         <b-row class="justify-content-end">
           <b-list-group horizontal class="border-none align-items-center">
-            <b-list-group-item>
+            <b-list-group-item class="hover">
               <b-input-group>
                 <b-form-input
                   placeholder="Hello, User"
@@ -39,6 +39,13 @@
                   ></b-button>
                 </b-input-group-append>
               </b-input-group>
+              <div class="onHover text-center">
+                <nuxt-link to="/login"><b-button variant="danger" class="w-100">Log In</b-button></nuxt-link>
+                <span class="text-danger pt-2 pb-3" style="border-bottom: 1px solid #bbb">Sign Up</span>
+                <nuxt-link :to="loggedIn ? '/login' : '/me'"><span>Your Account</span></nuxt-link>
+                <span>Your Order</span>
+                <span>Change Password</span>
+              </div>
             </b-list-group-item>
             <b-list-group-item class="d-flex justify-content-center"
               ><b-icon icon="heart" scale="2" variant="danger"></b-icon
@@ -137,7 +144,6 @@
   color: red !important;
 }
 .categories{
-  
   overflow-y: auto !important;
   max-height: 100px !important;
 }
@@ -151,6 +157,22 @@ a.dropdown-item{
 .dropdown-menu li:hover .dropdown-item {
   color: #d51912 !important;
 }
+.hover:hover .onHover{
+  visibility: visible;
+}
+.onHover{
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  margin-top: 0.5rem;
+  border: 1px solid #bbb;
+  background-color: #fff;
+  z-index: 8;
+  border-radius: 5px;
+  visibility: hidden;
+  position: absolute;
+}
 </style>
 <script>
 // import {mapGetters} from 'vuex'
@@ -162,7 +184,11 @@ export default {
       categories: [],
     };
   },
-  computed: {},
+  computed: {
+    loggedIn() {
+      return this.$auth.loggedIn
+    }
+  },
   created () {
     this.fetchCategories();
   },
