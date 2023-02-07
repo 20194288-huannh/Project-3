@@ -1,58 +1,81 @@
 <template>
-    <div>
-        <carousel :autoplay="true" :nav="false" :items="7" :loop="true" :center="true" :mouseDrag="true" :dots="false">
-            <template slot="prev"><span class="prev">prev</span></template>
-            <VerticalBook/>
-            <VerticalBook/>
-            <VerticalBook/>
-            <VerticalBook/>
-            <VerticalBook/>
-            <VerticalBook/>
-            <VerticalBook/>
-            <VerticalBook/>
-            <VerticalBook/>
-            <VerticalBook/>
-            <VerticalBook/>
-            <VerticalBook/>
-            <template slot="next"><span class="next">next</span></template>
-        </carousel>
-    </div>
+  <div>
+    <carousel
+      :autoplay="true"
+      :nav="false"
+      :items="7"
+      :loop="true"
+      :center="true"
+      :mouseDrag="true"
+      :dots="false"
+    >
+      <template slot="prev"><span class="prev">prev</span></template>
+      <VerticalBook @showModalQuickView="showModalQuickView"/>
+      <VerticalBook @showModalQuickView="showModalQuickView"/>
+      <VerticalBook @showModalQuickView="showModalQuickView"/>
+      <VerticalBook @showModalQuickView="showModalQuickView"/>
+      <VerticalBook @showModalQuickView="showModalQuickView"/>
+      <VerticalBook @showModalQuickView="showModalQuickView"/>
+      <VerticalBook @showModalQuickView="showModalQuickView"/>
+      <VerticalBook @showModalQuickView="showModalQuickView"/>
+      <template slot="next"><span class="next">next</span></template>
+    </carousel>
+  </div>
 </template>
 
 <script>
-    export default {
-
-    }
+export default {
+  data() {
+    return {
+      books: [],
+    };
+  },
+  methods: {
+    showModalQuickView() {
+      this.$emit("showModalQuickView");
+    },
+    async fetchBooks() {
+      const response = await this.$axios.get(`/categories/2/products`);
+      if (response.status === 200 && response.data) {
+        this.books = response.data.data;
+      }
+    },
+  },
+  created() {
+    this.fetchBooks();
+  },
+};
 </script>
 
 <style scoped>
-.owl-nav{
-    position: absolute;
-    top: 100px;
-    width: 100%;
-    left: 0
+.owl-nav {
+  position: absolute;
+  top: 100px;
+  width: 100%;
+  left: 0;
 }
-.prev, .next{
-    background: 0 0;
-    color: inherit;
-    border: none;
-    padding: 0 !important;
-    font: inherit;
+.prev,
+.next {
+  background: 0 0;
+  color: inherit;
+  border: none;
+  padding: 0 !important;
+  font: inherit;
 }
-.prev{
-    position: absolute;
-    left: -28px;
-    font-size: 60px !important;
-    color: #000;
-    top: -43px;
-    outline: 0;
+.prev {
+  position: absolute;
+  left: -28px;
+  font-size: 60px !important;
+  color: #000;
+  top: -43px;
+  outline: 0;
 }
-.right{
-    position: absolute;
-    right: -28px;
-    font-size: 60px !important;
-    color: #000;
-    top: -43px;
-    outline: 0;
+.right {
+  position: absolute;
+  right: -28px;
+  font-size: 60px !important;
+  color: #000;
+  top: -43px;
+  outline: 0;
 }
 </style>

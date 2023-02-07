@@ -11,27 +11,38 @@
       >
         <b-card-img
           img-top
-          :src="book?.image || 'https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/notavailable.gif' "
+          :src="
+            book?.image ||
+            'https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/notavailable.gif'
+          "
           alt="Wuthering Heights"
         />
       </a>
       <div class="title">
-        <a
+        <b-button
           v-show="isShowQuickView"
           class="quick-view themecolor w-100"
-          data-toggle="modal"
-          data-target="#quickviewmodal"
-          data-id="15247284"
-          >Quick View</a
-        >
+          @click="showModalQuickView"
+          >Quick View
+        </b-button>
         <b-card-text>
-          <span class="booktitle font-weight-bold text-center" v-if="book?.name"
-            >{{book.name}}</span
+          <span
+            class="booktitle font-weight-bold text-center"
+            v-if="book?.name"
+            >{{ book.name }}</span
           >
-          <span class="author authortextcolor" v-if="book?.author">{{book.author}}</span>
+          <span class="author authortextcolor" v-if="book?.author">{{
+            book.author
+          }}</span>
           <div class="d-flex justify-content-center">
-            <span class="actualprice themecolor font-weight-bold" v-if="book?.price">₹{{book.price}}</span>
-            <span class="initialprice"><del>₹{{salePrice}}</del></span>
+            <span
+              class="actualprice themecolor font-weight-bold"
+              v-if="book?.price"
+              >₹{{ book.price }}</span
+            >
+            <span class="initialprice"
+              ><del>₹{{ salePrice }}</del></span
+            >
           </div>
         </b-card-text>
       </div>
@@ -51,10 +62,15 @@ export default {
       isShowQuickView: 0,
     };
   },
+  methods: {
+    showModalQuickView() {
+      this.$emit('showModalQuickView')
+    }
+  },
   computed: {
     salePrice() {
-      return Math.floor(this.book?.price * Math.random())
-    }
+      return Math.floor(this.book?.price * Math.random());
+    },
   },
 };
 </script>
@@ -81,8 +97,9 @@ export default {
 .actualprice {
   color: #d51912 !important;
 }
-a.quick-view.themecolor {
+button.quick-view.themecolor {
   border: 1px solid #d51912;
+  background-color: #fff;
   font-size: 13px;
   padding: 2px 8px;
   text-transform: uppercase;
