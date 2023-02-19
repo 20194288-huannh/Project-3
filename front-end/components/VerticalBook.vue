@@ -6,8 +6,8 @@
       :class="isShowQuickView ? '' : 'border-card'"
     >
       <div class="offer position-absolute">40%</div>
-      <a
-        href="https://www.bookswagon.com/book/wuthering-heights-emily-brontë/9788172344894"
+      <nuxt-link
+        :to="`books/${book?.id}`"
       >
         <b-card-img
           img-top
@@ -17,12 +17,12 @@
           "
           alt="Wuthering Heights"
         />
-      </a>
+      </nuxt-link>
       <div class="title">
         <b-button
           v-show="isShowQuickView"
           class="quick-view themecolor w-100"
-          @click="showModalQuickView"
+          @click="showQuickView(book?.id)"
           >Quick View
         </b-button>
         <b-card-text>
@@ -63,9 +63,10 @@ export default {
     };
   },
   methods: {
-    showModalQuickView() {
-      this.$emit('showModalQuickView')
-    }
+    showQuickView(id) {
+      console.log(`1  ${id}`)
+      this.$emit("show-modal-quick-view", id);
+    },
   },
   computed: {
     salePrice() {
@@ -85,6 +86,7 @@ export default {
   height: 41px;
   overflow: hidden;
 }
+
 .author {
   color: #332e2e;
   font-size: 14px;
@@ -94,13 +96,15 @@ export default {
   text-align: center;
   width: 100% !important;
 }
+
 .actualprice {
   color: #d51912 !important;
 }
+
 button.quick-view.themecolor {
   border: 1px solid #d51912;
   background-color: #fff;
-  font-size: 13px;
+  font-size: 12px;
   padding: 2px 8px;
   text-transform: uppercase;
   font-weight: 700;
@@ -113,16 +117,21 @@ button.quick-view.themecolor {
   cursor: pointer;
   text-align: center;
 }
+
 .themecolor {
   color: #d51912 !important;
 }
+
 .title {
   position: relative;
-  margin-top: 28px;
+  margin-top: auto 0;
+  font-style: italic;
 }
+
 .border-card {
   border: 1px solid #fff;
 }
+
 .offer {
   background: red;
   width: 36px;

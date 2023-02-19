@@ -3,7 +3,7 @@ import moment from 'moment';
 import VueSweetalert2 from 'vue-sweetalert2'
 import VueStarRating from 'vue-star-rating';
 import MultiRangeSlider from "multi-range-slider-vue";
-import carousel from 'vue-owl-carousel'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 
 
 Vue.filter('startCase', (str) => {
@@ -24,6 +24,6 @@ Vue.filter('formatDate', (value) => {
 
 Vue.component('star-rating', VueStarRating);
 Vue.component('multi-range-slider', MultiRangeSlider);
-Vue.component('carousel', carousel);
 Vue.use(VueSweetalert2, { name: '$swal', VueSweetalert2 })
 Vue.prototype.moment = moment
+Vue.use(VueAwesomeSwiper);

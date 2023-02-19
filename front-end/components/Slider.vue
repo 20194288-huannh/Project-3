@@ -1,81 +1,88 @@
 <template>
   <div>
-    <carousel
-      :autoplay="true"
-      :nav="false"
-      :items="7"
-      :loop="true"
-      :center="true"
-      :mouseDrag="true"
-      :dots="false"
+    <div class="d-flex justify-content-between mt-4">
+      <h3 class="title">{{ title }}</h3>
+      <nuxt-link class="see-all" to="">See All</nuxt-link>
+    </div>
+    <swiper
+      class="swiper"
+      :options="swiperOption"
+      ref="swiper"
+      style="padding: 0 28px 30px 28px"
     >
-      <template slot="prev"><span class="prev">prev</span></template>
-      <VerticalBook @showModalQuickView="showModalQuickView"/>
-      <VerticalBook @showModalQuickView="showModalQuickView"/>
-      <VerticalBook @showModalQuickView="showModalQuickView"/>
-      <VerticalBook @showModalQuickView="showModalQuickView"/>
-      <VerticalBook @showModalQuickView="showModalQuickView"/>
-      <VerticalBook @showModalQuickView="showModalQuickView"/>
-      <VerticalBook @showModalQuickView="showModalQuickView"/>
-      <VerticalBook @showModalQuickView="showModalQuickView"/>
-      <template slot="next"><span class="next">next</span></template>
-    </carousel>
+      <swiper-slide v-for="(book, index) in books" :key="index">
+        <VerticalBook :book="book" @show-modal-quick-view="showModal"/>
+      </swiper-slide>
+      <div class="swiper-pagination mt-4" slot="pagination"></div>
+      <div class="swiper-button-prev" slot="button-prev" @click="prev()"></div>
+      <div class="swiper-button-next" slot="button-next" @click="next()"></div>
+    </swiper>
   </div>
 </template>
 
 <script>
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/swiper-bundle.css";
 export default {
   data() {
     return {
-      books: [],
+      swiperOption: {
+        slidesPerView: 7,
+        spaceBetween: 10,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        autoplay: true,
+      },
+      isShowQuickView: 0,
     };
   },
+  props: {
+    books: {
+      type: Array,
+      default: [],
+    },
+    title: {
+      type: String,
+      default: "",
+    },
+  },
   methods: {
-    showModalQuickView() {
-      this.$emit("showModalQuickView");
+		prev() {
+			this.$refs.swiper.$swiper.slidePrev();
+		},
+		next() {
+			this.$refs.swiper.$swiper.slideNext();
+		},
+    showModal(id) {
+      this.$emit("show-modal", id);
     },
-    async fetchBooks() {
-      const response = await this.$axios.get(`/categories/2/products`);
-      if (response.status === 200 && response.data) {
-        this.books = response.data.data;
-      }
-    },
-  },
-  created() {
-    this.fetchBooks();
-  },
+	}
 };
 </script>
 
 <style scoped>
-.owl-nav {
-  position: absolute;
-  top: 100px;
-  width: 100%;
-  left: 0;
-}
-.prev,
-.next {
-  background: 0 0;
-  color: inherit;
-  border: none;
-  padding: 0 !important;
-  font: inherit;
-}
-.prev {
-  position: absolute;
-  left: -28px;
-  font-size: 60px !important;
+.swiper-button-next:after {
+  margin-left: 30px;
+  margin-bottom: 100px;
+  font-size: 30px;
   color: #000;
-  top: -43px;
-  outline: 0;
 }
-.right {
-  position: absolute;
-  right: -28px;
-  font-size: 60px !important;
+
+.swiper-button-prev:after {
+  margin-right: 30px;
+  margin-bottom: 100px;
+  font-size: 30px;
   color: #000;
-  top: -43px;
-  outline: 0;
+}
+
+.see-all {
+  color: red;
+  margin: auto 0;
 }
 </style>

@@ -80,7 +80,8 @@ class ProductController extends ApiController
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $data = $product->update($request->only(['name', 'category_id', 'image', 'author', 'type', 'price', 'sale', 'description_title', 'description', 'shipping_time', 'shipping_cost']));
     }
 
     /**
@@ -91,7 +92,9 @@ class ProductController extends ApiController
      */
     public function destroy($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $data = $product->delete();
+        return $this->response(['success' => true, 'data' => $data]);
     }
 
     public function getProductByCategory(int $category_id) {

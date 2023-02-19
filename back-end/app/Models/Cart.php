@@ -10,12 +10,12 @@ class Cart extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded = [];
-    public function user()
+    public function order()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Order::class);
     }
-    public function orders()
+    public function payment()
     {
-        return $this->hasMany(Order::class);
+        return $this->belongsTo(Payment::class);
     }
 }
