@@ -1,16 +1,77 @@
 <template>
-    <b-container class="d-flex flex-column justify-content-center mt-5">
-        <b-icon icon="heart" scale="4" variant="danger" class="text-center"></b-icon>
-        <h1 class="text-center font-weight-bold mt-3 mb-4">My WishList</h1>
-    </b-container>
+<b-container class="d-flex flex-column justify-content-center align-items-center mt-5">
+    <b-icon icon="heart" scale="4" variant="danger" class="mt-4 mb-4"></b-icon>
+    <h1 class="text-center font-weight-bold mt-3 mb-4">My WishList</h1>
+    <b-table :items="books" :fields="fields">
+        <template #cell(actions)="row">
+            <div class="text-muted" style="font-size: 14px">Added on: {{row.item?.created_at | formatDate}}</div>
+          <b-button
+            size="sm"
+            variant="success"
+            class="add-to-cart-btn"
+            @click="AddtoCart(row.item)"
+          >
+            Add to Cart
+          </b-button>
+        </template>
+        <template #cell(id)="row">
+          <b-button @click="destroyWishList(row.item.id)" variant="link"><b-icon icon="trash-fill" aria-hidden="true" scale="2" variant="muted"></b-icon></b-button>
+        </template>
+        <template #cell(image)="row">
+          <div class="d-flex">
+            <b-img left :src="row.item?.image" alt="Left image" height="100" class="mr-3"></b-img>
+          </div>
+        </template>
+        <template #cell(price)="row">
+          <div class="d-flex flex-column justify-content-between">
+            <span class="text-muted actual-price">${{row.item?.price}}</span>
+            <span class="text-muted">${{row.item?.price}}</span>
+          </div>
+        </template>
+        <template #cell(sale)="row">
+          <div class="d-flex flex-column justify-content-between">
+            <span class="text-muted actual-price">{{row.item?.sale}}%</span>
+          </div>
+        </template>
+      </b-table>
+</b-container>
 </template>
 
 <script>
-    export default {
-        
-    }
+export default {
+    data() {
+        return {
+            fields: [
+                { key: "id", label: "Sr.#" },
+                { key: "name", label: "Name" },
+                { key: "author", label: "Author" },
+                { key: "image", label: "Image" },
+                { key: "price", label: "Price" },
+                { key: "sale", label: "Sale" },
+                { key: "actions", label: "Actions" },
+            ],
+            books: []
+        }
+    },
+    methods: {
+        async fetchWishList() {
+            const response = await this.GET('/products/wishlist')
+            this.books = response.data.data
+        },
+        async destroyWishList(id) {
+            const response = await this.POST(`/products/wishlist/${id}`)
+            this.fetchWishList()
+        }
+    },
+    created() {
+        this.fetchWishList();
+    },
+}
 </script>
 
 <style lang="scss" scoped>
-
+.add-to-cart-btn{
+    padding: 5px 25px;
+    border-radius: 15px;
+}
 </style>

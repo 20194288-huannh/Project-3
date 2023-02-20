@@ -45,7 +45,7 @@
         <span v-else>Free Shipping in India and low cost Worldwide.</span>
         <div class="mt-2">
             <b-button variant="danger" class="font-weight-bold" @click="buy">Buy Now</b-button>
-            <b-button variant="dark" class="font-weight-bold">Add to Wishlist</b-button>
+            <b-button variant="dark" class="font-weight-bold" @click="addToWishList">Add to Wishlist</b-button>
         </div>
     </b-col>
   </b-row>
@@ -68,6 +68,10 @@ export default {
             } else {
                 this.$router.push('/login')
             }
+        },
+        async addToWishList(id) {
+            const response = await this.POST('products/wishlist', {product_id: this.book.id})
+            this.$router.push('/wishlist')
         }
     },
 };

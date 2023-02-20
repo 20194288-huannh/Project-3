@@ -43,11 +43,10 @@ class OrderController extends ApiController
         ]);
         return $this->responseOk(new OrderResource($order));
     }
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        info($id);
-        $order = Order::find($id)->delete();
-        return $this->responseOk(new OrderResource($order));
+        $data = Order::find($id)->delete();
+        return $this->response(['success' => true, 'data' => $data]);
     }
     public function getOrderByUser()
     {

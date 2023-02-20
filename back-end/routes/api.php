@@ -34,6 +34,12 @@ Route::get('user', [UserController::class, 'profile']);
     });
     Route::controller(ProductController::class)->prefix('/products')->group(function () {
         Route::get('', 'index');
+        Route::get('fiction-book', 'getFictionBook');
+        Route::get('best-sellers', 'getBestSellers');
+        Route::get('new-arrivals', 'getNewArrivals');
+        Route::get('wishlist', 'getWishList');
+        Route::post('wishlist', 'likedProduct');
+        Route::post('wishlist/{id}', 'destroyLikedProduct');
         Route::get('{id}', 'show');
     });
     Route::controller(CategoryController::class)->prefix('categories')->group(function () {

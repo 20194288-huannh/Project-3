@@ -3,10 +3,10 @@
     <div class="box-login-outer">
       <div class="box-login">
         <h4 class="text-center font-italic">Sign Up</h4>
-        <b-form @submit.prevent="login">
+        <b-form @submit.prevent="register">
           <b-form-group label="Name">
             <b-form-input
-              v-model.trim="form.name"
+              v-model.trim="user.name"
               type="text"
               placeholder="Name"
               required
@@ -14,16 +14,24 @@
           </b-form-group>
           <b-form-group label="Email">
             <b-form-input
-              v-model.trim="form.email"
+              v-model.trim="user.email"
               type="email"
               placeholder="Email"
               required
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group label="Password" class="none-margin-bottom">
+          <b-form-group label="Password">
             <b-form-input
-              v-model.trim="form.password"
+              v-model.trim="user.password"
+              type="password"
+              placeholder="Password"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group label="Confirm Password" class="none-margin-bottom">
+            <b-form-input
+              v-model.trim="user.confirm_password"
               type="password"
               placeholder="Password"
               required
@@ -63,7 +71,7 @@
 <style>
 .box-login-wrapper {
   background: url(https://www.bookswagon.com/images/css/login_bg.jpg);
-  height: 600px;
+  height: 800px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -103,15 +111,26 @@ export default {
   },
   data() {
     return {
-      form: {
+      user: {
         email: "",
         password: "",
+        confirm_password: "",
+        name: ""
       },
       status: "accepted",
     };
   },
   methods: {
-    async register() {},
+    async register() {
+      const response = await this.$axios.post(`/register`, this.user)
+      if (response.status === 200 && response.data) {
+        this.$toast.success("Register successfully!")
+        await this.$auth.setToken('local', "Bearer " + response.data.authorisation.token)
+        await this.$auth.setUserToken(response.data.authorisation.token)
+        await this.$auth.setUser(response.data.user)
+        console.log(this.$store.state)
+      }
+    },
   },
 };
 </script>

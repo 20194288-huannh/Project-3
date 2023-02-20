@@ -45,14 +45,13 @@
                             <nuxt-link to="/login">
                                 <b-button variant="danger" class="w-100" @click="logout">Log Out</b-button>
                             </nuxt-link>
-                            <span class="text-danger pt-2 pb-3" style="border-bottom: 1px solid #bbb">Sign Up</span>
-                            <nuxt-link :to="loggedIn ? '/login' : '/me'"><span>Your Account</span></nuxt-link>
+                            <nuxt-link to="/me"><span>Your Account</span></nuxt-link>
                             <span>Your Order</span>
                             <span>Change Password</span>
                         </div>
                     </b-list-group-item>
                     <b-list-group-item class="d-flex justify-content-center">
-                        <b-icon icon="heart" scale="2" variant="danger"></b-icon>
+                        <nuxt-link :to="`${loggedIn ? '/wishlist' : 'login'}`"><b-icon icon="heart" scale="2" variant="danger"></b-icon></nuxt-link>
                     </b-list-group-item>
                     <b-list-group-item class="d-flex justify-content-center">
                         <b-icon icon="cart3" scale="2" variant="danger"></b-icon>
@@ -66,24 +65,24 @@
             <b-navbar>
                 <b-navbar-nav>
                     <!-- Navbar dropdowns -->
-                    <b-nav-item-dropdown text="Book" left>
+                    <b-nav-item-dropdown text="Book" variant="light" left>
                         <b-dropdown-item :href="`/categories/${category.id}`" class="book-category" v-for="category in categories" :key="category.id">{{category.name}}</b-dropdown-item>
                     </b-nav-item-dropdown>
 
                     <b-nav-item href="#">
-                        <nuxt-link to="/promo/id">New Arrivals</nuxt-link>
+                        <nuxt-link to="/promo/new-arrivals">New Arrivals</nuxt-link>
                     </b-nav-item>
                     <b-nav-item href="#">
-                        <nuxt-link to="/promo/id">Box Sets</nuxt-link>
+                        <nuxt-link to="/promo/box-sets">Box Sets</nuxt-link>
                     </b-nav-item>
                     <b-nav-item href="#">
-                        <nuxt-link to="/promo/id">Best sellers</nuxt-link>
+                        <nuxt-link to="/promo/best-sellers">Best sellers</nuxt-link>
                     </b-nav-item>
                     <b-nav-item href="#">
-                        <nuxt-link to="/promo/id">Fiction Books</nuxt-link>
+                        <nuxt-link to="/promo/fiction-book">Fiction Books</nuxt-link>
                     </b-nav-item>
                     <b-nav-item href="#">
-                        <nuxt-link to="/promo/id">Award Winners</nuxt-link>
+                        <nuxt-link to="/promo/award-winners">Award Winners</nuxt-link>
                     </b-nav-item>
                     <b-nav-item href="#">
                         <nuxt-link to="/authors">Feature Authors</nuxt-link>
@@ -128,7 +127,7 @@
     background: #d51912;
 }
 
-.nav-link a {
+.nav-link a{
     color: #fff !important;
     padding: 11px 15px !important;
     font-size: 16px;
@@ -183,6 +182,9 @@ a.dropdown-item {
     border-radius: 5px;
     visibility: hidden;
     position: absolute;
+}
+.dropdown-toggle{
+    color: #fff !important;
 }
 </style>
 

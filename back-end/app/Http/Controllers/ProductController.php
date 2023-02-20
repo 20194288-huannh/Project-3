@@ -23,8 +23,8 @@ class ProductController extends ApiController
      */
     public function index()
     {
-        $product = Product::latest()->paginate();
-        return $this->response(['success' => true, 'data' => new ProductCollection($product)]);
+        $products = Product::latest()->paginate();
+        return $this->response(['success' => true, 'data' => new ProductCollection($products)]);
     }
 
     /**
@@ -97,11 +97,103 @@ class ProductController extends ApiController
         return $this->response(['success' => true, 'data' => $data]);
     }
 
-    public function getProductByCategory(int $category_id) {
+    public function getProductByCategory(int $category_id)
+    {
         $categories_ids = $this->categoryRepo->getSubcategoriesIds(Category::with('subcategories')->where('id', $category_id)->first());
-        $products = Product::whereHas('categories', function ($q) use ($categories_ids){
+        $products = Product::whereHas('categories', function ($q) use ($categories_ids) {
             $q->whereIn('categories.id', $categories_ids);
         })->orderBy('name', 'ASC')->paginate();
         return $this->response(['success' => true, 'data' => ProductResource::collection($products)]);
     }
+
+    public function getNewArrivals(Request $request)
+    {
+        $query = Product::where('status', Product::STATUS_NEW)
+            ->whereBetween('price', [$request->min_price, $request->max_price])
+            ->whereBetween('sale', [$request->min_discount, $request->max_discount]);
+        if ($request->has('binding') == 'other') {
+            $query->whereHas('productDetail', function ($q) use ($request) {
+                $q->where('binding', '!=', 'Paperback')->where('binding', '!=', 'Hardback');
+            });
+        } else if ($request->has('binding')) {
+            $query->whereHas('productDetail', function ($q) use ($request) {
+                $q->where('binding', $request->binding);
+            });
+        }
+        if ($request->has('language')) {
+            $query->whereHas('productDetail', function ($q) use ($request) {
+                $q->where('language', $request->language);
+            });
+        }
+        $products = $query->latest()->paginate();
+        return $this->response(['success' => true, 'data' => new ProductCollection($products)]);
+    }
+
+    public function getFictionBook(Request $request)
+    {
+        $categories_ids = $this->categoryRepo->getSubcategoriesIds(Category::with('subcategories')->where('id', 151)->first());
+        $query = Product::whereHas('categories', function ($query) use ($categories_ids){
+            $query->whereIn('categories.id', $categories_ids);
+        })->whereBetween('price', [$request->min_price, $request->max_price])
+            ->whereBetween('sale', [$request->min_discount, $request->max_discount]);
+        if ($request->has('binding') == 'other') {
+            $query->whereHas('productDetail', function ($q) use ($request) {
+                $q->where('binding', '!=', 'Paperback')->where('binding', '!=', 'Hardback');
+            });
+        } else if ($request->has('binding')) {
+            $query->whereHas('productDetail', function ($q) use ($request) {
+                $q->where('binding', $request->binding);
+            });
+        }
+        if ($request->has('language')) {
+            $query->whereHas('productDetail', function ($q) use ($request) {
+                $q->where('language', $request->language);
+            });
+        }
+        $products = $query->latest()->paginate();
+        return $this->response(['success' => true, 'data' => new ProductCollection($products)]);
+    }
+
+    public function getBestSellers(Request $request)
+    {
+        $query = Product::whereBetween('price', [$request->min_price, $request->max_price])
+            ->whereBetween('sale', [$request->min_discount, $request->max_discount]);
+        if ($request->has('binding') == 'other') {
+            $query->whereHas('productDetail', function ($q) use ($request) {
+                $q->where('binding', '!=', 'Paperback')->where('binding', '!=', 'Hardback');
+            });
+        } else if ($request->has('binding')) {
+            $query->whereHas('productDetail', function ($q) use ($request) {
+                $q->where('binding', $request->binding);
+            });
+        }
+        if ($request->has('language')) {
+            $query->whereHas('productDetail', function ($q) use ($request) {
+                $q->where('language', $request->language);
+            });
+        }
+        $products = $query->orderBy('sold', 'DESC')->paginate();
+        return $this->response(['success' => true, 'data' => new ProductCollection($products)]);
+    }
+
+    public function getWishList()
+    {
+        // $products = Product::whereHas('likedBy', function ($q) {
+        //     $q->where('id', auth()->user()->id);
+        // });
+        $products = auth()->user()->wish()->latest()->paginate();
+        return $this->response(['success' => true, 'data' => new ProductCollection($products)]);
+    }
+
+    public function likedProduct(Request $request)
+    {
+        $data = auth()->user()->wish()->attach([$request->product_id]);
+        return $this->response(['success' => true, 'data' => $data]);
+    }
+    public function destroyLikedProduct($id)
+    {
+        $data = auth()->user()->wish()->detach([$id]);
+        return $this->response(['success' => true, 'data' => $data]);
+    }
+
 }

@@ -10,8 +10,7 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded = [];
-    const STATUS_AVAILABLE = 1;
-    const STATUS_INTERNATIONAL_EDITION = 1;
+    const STATUS_NEW = 1;
 
     const TYPE_PAPER_BACK = 1;
     const TYPE_HARD_COVER = 2;
@@ -28,5 +27,9 @@ class Product extends Model
     public function productDetail()
     {
         return $this->hasOne(ProductDetail::class, 'product_id');
+    }
+    public function likedBy()
+    {
+        return $this->belongsToMany(Product::class, 'product_users');
     }
 }

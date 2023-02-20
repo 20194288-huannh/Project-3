@@ -5,9 +5,9 @@
       @mouseout="isShowQuickView = 0"
       :class="isShowQuickView ? '' : 'border-card'"
     >
-      <div class="offer position-absolute">40%</div>
+      <div class="offer position-absolute">{{book.sale}}%</div>
       <nuxt-link
-        :to="`books/${book?.id}`"
+        :to="`/books/${book.id}`"
       >
         <b-card-img
           img-top
@@ -64,13 +64,12 @@ export default {
   },
   methods: {
     showQuickView(id) {
-      console.log(`1  ${id}`)
       this.$emit("show-modal-quick-view", id);
     },
   },
   computed: {
     salePrice() {
-      return Math.floor(this.book?.price * Math.random());
+      return Math.floor(this.book?.price - this.book?.price * this.book?.sale / 100);
     },
   },
 };
