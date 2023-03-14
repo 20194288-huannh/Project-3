@@ -31,6 +31,7 @@ Route::get('user', [UserController::class, 'profile']);
     Route::controller(UserController::class)->prefix('/users')->group(function () {
         Route::get('', 'index');
         Route::post('', 'store');
+        Route::get('{id}', 'show');
     });
     Route::controller(ProductController::class)->prefix('/products')->group(function () {
         Route::get('', 'index');
@@ -41,6 +42,7 @@ Route::get('user', [UserController::class, 'profile']);
         Route::post('wishlist', 'likedProduct');
         Route::post('wishlist/{id}', 'destroyLikedProduct');
         Route::get('{id}', 'show');
+        Route::post('{id}/delete', 'destroy');
     });
     Route::controller(CategoryController::class)->prefix('categories')->group(function () {
         Route::get('', 'index');

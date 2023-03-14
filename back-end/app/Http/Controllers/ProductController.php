@@ -21,9 +21,19 @@ class ProductController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::latest()->paginate();
+        $products = Product::latest();
+        if ($request->has('category')) {
+            $categories_ids = $this->categoryRepo->getSubcategoriesIds(Category::with('subcategories')->where('id', $request->category)->first());
+            $products = Product::whereHas('categories', function ($q) use ($categories_ids) {
+                $q->whereIn('categories.id', $categories_ids);
+            })->orderBy('name', 'ASC');
+        }
+        if ($request->has('keyword')) {
+
+        }
+        $products = $products->paginate();
         return $this->response(['success' => true, 'data' => new ProductCollection($products)]);
     }
 

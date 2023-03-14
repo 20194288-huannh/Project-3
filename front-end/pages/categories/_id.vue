@@ -92,33 +92,78 @@
           >
             Add to Wishlist
           </b-button>
-          <b-button size="sm" variant="link" @click="remove(row.item.id)"> Remove </b-button>
+          <b-button size="sm" variant="link" @click="remove(row.item.id)">
+            Remove
+          </b-button>
         </template>
         <template #cell(id)="row">
-          <span>{{row.item.product.id}}</span>
+          <span>{{ row.item.product.id }}</span>
         </template>
         <template #cell(description)="row">
           <div class="d-flex">
-            <b-img left :src="row.item?.product?.image" alt="Left image" height="50" class="mr-3"></b-img>
+            <b-img
+              left
+              :src="row.item?.product?.image"
+              alt="Left image"
+              height="50"
+              class="mr-3"
+            ></b-img>
             <div>
-              <div><strong>{{row.item?.product?.name}}</strong></div>
-              <div>by {{row.item?.product?.author}}</div>
+              <div>
+                <strong>{{ row.item?.product?.name }}</strong>
+              </div>
+              <div>by {{ row.item?.product?.author }}</div>
             </div>
           </div>
         </template>
         <template #cell(price)="row">
           <div class="d-flex flex-column justify-content-between">
-            <span class="text-muted actual-price">${{row.item?.product?.price}}</span>
-            <span class="text-muted">${{row.item?.product?.price}}</span>
+            <span class="text-muted actual-price"
+              >${{ row.item?.product?.price }}</span
+            >
+            <span class="text-muted">${{ row.item?.product?.price }}</span>
           </div>
         </template>
         <template #cell(total_price)="row">
           <div class="d-flex flex-column justify-content-between">
-            <span class="text-muted actual-price">${{row.item?.product?.price}}</span>
-            <span class="text-muted">${{row.item?.product?.price}}</span>
+            <span class="text-muted actual-price"
+              >${{ row.item?.product?.price }}</span
+            >
+            <span class="text-muted">${{ row.item?.product?.price }}</span>
           </div>
         </template>
       </b-table>
+      <b-row style="border-top: 1px solid #" class="pt-3">
+        <b-col cols="6"></b-col>
+        <b-col cols="6" style="font-size: 13px">
+          <b-row>
+            <b-col cols="3">
+              <div>Total Gross</div>
+              <div>Shipping</div>
+              <div class="font-weight-bold">Amount Payable</div>
+            </b-col>
+            <b-col cols="3">
+              <div>: ₹ {{ total_gross }}</div>
+              <div>: ₹ 78</div>
+              <div style="color: #009900" class="font-weight-bold">
+                : ₹ {{ total_gross + 78 }}
+              </div>
+            </b-col>
+            <b-col cols="6">
+              <div style="color: #009900" class="font-weight-bold">
+                Ships within 14-16 days.
+              </div>
+              <div></div>
+              <div>(International Shipping Calculator)</div>
+            </b-col>
+          </b-row>
+        </b-col>
+      </b-row>
+      <template #modal-footer>
+        <b-button size="lg" variant="danger" @click="payment">
+          Place Order
+        </b-button>
+      </template>
     </b-modal>
   </b-container>
 </template>
@@ -133,6 +178,7 @@ export default {
       books: [],
       orders: [],
       breadcrumbs: [],
+      total_gross: null,
       fields: [
         { key: "id", label: "Sr.#" },
         { key: "description", label: "Item Description" },
@@ -186,7 +232,8 @@ export default {
     async fetchOrders() {
       const response = await this.$axios.get("/orders/all");
       if (response.status === 200 && response.data) {
-        this.orders = response.data.data;
+        this.orders = response.data.data.data;
+        this.total_gross = response.data.data.total_gross;
       }
     },
     showModal() {
@@ -194,13 +241,16 @@ export default {
       this.fetchOrders();
     },
     async remove(id) {
-      const response = await this.$axios.post(`/orders/${id}/delete`)
+      const response = await this.$axios.post(`/orders/${id}/delete`);
       if (response.status === 200 && response.data) {
-        this.$toast.success("Remove order success!")
-        this.fetchOrders()
+        this.$toast.success("Remove order success!");
+        this.fetchOrders();
       } else {
-        this.$toast.error("Fail")
+        this.$toast.error("Fail");
       }
+    },
+    payment() {
+      this.$router.push('/payment')
     }
   },
   async created() {
@@ -268,7 +318,7 @@ export default {
 .italic {
   font-style: italic;
 }
-.actual-price{
+.actual-price {
   font-size: 13px;
   text-decoration: line-through;
   font-weight: 600;

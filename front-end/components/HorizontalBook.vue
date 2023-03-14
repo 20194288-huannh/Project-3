@@ -70,8 +70,12 @@ export default {
             }
         },
         async addToWishList(id) {
-            const response = await this.POST('products/wishlist', {product_id: this.book.id})
-            this.$router.push('/wishlist')
+            if (this.$auth.loggedIn) {
+                const response = await this.POST('products/wishlist', {product_id: this.book.id})
+                this.$router.push('/wishlist')
+            } else {
+                this.$router.push('/login')
+            }
         }
     },
 };

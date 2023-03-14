@@ -14,6 +14,11 @@ class UserController extends ApiController
         $users = User::paginate();
         return $this->response(['message' => 'success', 'data' => new UserCollection($users)]);
     }
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        return $this->response(['message' => 'success', 'data' => new UserResource($user)]);
+    }
     public function store(Request $request)
     {
         $user = User::create($request->only(['name', 'phone', 'email', 'password', 'address']));

@@ -25,7 +25,7 @@
         >Books</nuxt-link
       >
       <nuxt-link
-        to="books"
+        to="categories"
         class="list-group-item list-group-item-action bg-transparent second-text fw-bold"
         ><b-icon icon="list" variant="success" class="mr-2"></b-icon
         >Category</nuxt-link

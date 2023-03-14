@@ -3,23 +3,45 @@
     <b-row>
         <b-col cols="8">
             <b-card>
-                <b-card-title class="text-center text-dark font-weight-bold">Payment</b-card-title>
+                <h4 class="text-center font-weight-bold">Payment</h4>
                 <b-row>
-                    <b-col cols="3">
-                        <b-img class="w-100" src="https://d2g9wbak88g7ch.cloudfront.net/productimages/images200/179/9781398518179.jpg"></b-img>
-                    </b-col>
-                    <b-col cols="8">
-                        <h4 class="text-danger font-italic inline-block">It Starts with Us</h4>
-                        <span>(Paperback) |</span><span> Released: 18 Oct 2022</span>
-                        <br />
-                        <span>By: Colleen Hoover (Author) | </span> <span>Publisher: Simon & Schuster Ltd</span>
-                        <span class="actualprice text-danger font-weight-bold">
-                            <label style="font-size: 28px">₹384</label>
-                        </span>
-                        <p>
-                            <label id="ctl00_phBody_ProductDetail_lblBusiness">Ships within <b>4-6 Business Days</b></label>
-                            <label id="ctl00_phBody_ProductDetail_lishipping"><br>₹39 shipping in India per item and low cost Worldwide.</label>
-                        </p>
+                    <b-col cols="12">
+                        <b-table :items="orders" :fields="fields">
+                            <template #cell(actions)="row">
+                                <b-button size="sm" variant="link" @click="AddtoWishList(row.item)" class="mr-1">
+                                    Add to Wishlist
+                                </b-button>
+                                <b-button size="sm" variant="link" @click="remove(row.item.id)">
+                                    Remove
+                                </b-button>
+                            </template>
+                            <template #cell(id)="row">
+                                <span>{{ row.item.product.id }}</span>
+                            </template>
+                            <template #cell(description)="row">
+                                <div class="d-flex">
+                                    <b-img left :src="row.item?.product?.image" alt="Left image" height="50" class="mr-3"></b-img>
+                                    <div>
+                                        <div>
+                                            <strong>{{ row.item?.product?.name }}</strong>
+                                        </div>
+                                        <div>by {{ row.item?.product?.author }}</div>
+                                    </div>
+                                </div>
+                            </template>
+                            <template #cell(price)="row">
+                                <div class="d-flex flex-column justify-content-between">
+                                    <span class="text-muted actual-price">${{ row.item?.product?.price }}</span>
+                                    <span class="text-muted">${{ row.item?.product?.price }}</span>
+                                </div>
+                            </template>
+                            <template #cell(total_price)="row">
+                                <div class="d-flex flex-column justify-content-between">
+                                    <span class="text-muted actual-price">${{ row.item?.product?.price }}</span>
+                                    <span class="text-muted">${{ row.item?.product?.price }}</span>
+                                </div>
+                            </template>
+                        </b-table>
                     </b-col>
                 </b-row>
                 <div class="d-flex flex-column">
@@ -95,43 +117,27 @@
                     <table class="table table-striped table-bordered hide-form" style="color: black">
                         <tbody>
                             <tr>
-                                <td><b>ISBN-10: </b></td>
-                                <td id="type-card-table" class="text-center notranslate">
-                                    Zing
+                                <td><b>Actual Price:</b></td>
+                                <td id="fee-total-card-table" class="content-sum-price text-danger text-center notranslate">
+                                    19.300 VNĐ
                                 </td>
                             </tr>
                             <tr>
-                                <td><b>ISBN-13:</b></td>
-                                <td id="amount-card-table" class="conent-telecom-value text-center notranslate">
-                                    20.000đ
+                                <td><b>Shipping:</b></td>
+                                <td id="fee-total-card-table" class="content-sum-price text-danger text-center notranslate">
+                                    78
                                 </td>
                             </tr>
                             <tr>
-                                <td><b>Publisher Date: </b></td>
-                                <td id="pay-method-card-table" class="text-center notranslate">
-                                    atm
+                                <td><b>Voucher:</b></td>
+                                <td id="fee-total-card-table" class="content-sum-price text-danger text-center notranslate">
+                                    None
                                 </td>
-                            </tr>
-                            <tr>
-                                <td><b>Binding:</b></td>
-                                <td id="count-card-table" class="content-qty text-center">
-                                    1
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b>No Of Pages:</b></td>
-                                <td id="rate-card-table" class="content-ratio text-center notranslate">
-                                    3.5%
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b>Weight:</b></td>
-                                <td id="pay-method-fee" class="text-center">0đ</td>
                             </tr>
                             <tr>
                                 <td><b>Price:</b></td>
                                 <td id="fee-total-card-table" class="content-sum-price text-danger text-center notranslate">
-                                    19.300 VNĐ
+                                    None
                                 </td>
                             </tr>
                         </tbody>
@@ -140,14 +146,9 @@
             </b-card>
         </b-col>
     </b-row>
-    <b-modal
-      centered
-      scrollable
-      size="l"
-      id="qr-modal"
-    >
-      <template #modal-title class="title"> Payments </template>
-      <img src="~/assets/images/QR.jpg" class="w-100 h-100"></img>
+    <b-modal centered scrollable size="l" id="qr-modal">
+        <template #modal-title class="title"> Payments </template>
+        <img src="~/assets/images/QR.jpg" class="w-100 h-100"></img>
     </b-modal>
 </b-container>
 </template>
@@ -157,7 +158,46 @@ export default {
     data() {
         return {
             item_payment: 1,
+            orders: [],
+            total_gross: null,
+            fields: [{
+                    key: "id",
+                    label: "Sr.#"
+                },
+                {
+                    key: "description",
+                    label: "Item Description"
+                },
+                {
+                    key: "quantity",
+                    label: "Quantity"
+                },
+                {
+                    key: "price",
+                    label: "Item Price"
+                },
+                {
+                    key: "total_price",
+                    label: "Total Price"
+                },
+                {
+                    key: "actions",
+                    label: "Actions"
+                },
+            ],
         }
+    },
+    methods: {
+        async fetchOrders() {
+            const response = await this.$axios.get("/orders/all");
+            if (response.status === 200 && response.data) {
+                this.orders = response.data.data.data;
+                this.total_gross = response.data.data.total_gross;
+            }
+        },
+    },
+    created() {
+        this.fetchOrders();
     },
 };
 </script>

@@ -12,6 +12,10 @@ class OrderController extends ApiController
     public function index()
     {
         $orders = Order::latest()->paginate();
+        $orders = $orders->map(function ($order) {
+            $order->total_price = $order->product->price * $order->quantity;
+            return $order;
+        });
         return $this->response(['message' => 'success', 'data' => new OrderCollection($orders)]);
     }
     public function store(Request $request)
@@ -51,6 +55,15 @@ class OrderController extends ApiController
     public function getOrderByUser()
     {
         $orders = Order::where('user_id', auth()->user()->id)->latest()->paginate();
-        return $this->responseOk(OrderResource::collection($orders));
+        $orders = $orders->map(function ($order) {
+            $order->total_price = $order->product->price * $order->quantity;
+            return $order;
+        });
+        $total_gross = array_sum($orders->pluck('total_price')->toArray());
+        $responseData = [
+            'data' => OrderResource::collection($orders)->toArray(request()),
+            'total_gross' => $total_gross
+        ];
+        return $this->responseOk($responseData);
     }
 }

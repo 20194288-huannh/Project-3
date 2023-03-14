@@ -24,6 +24,7 @@ class OrderResource extends JsonResource
             'quantity' => $this->quantity,
             'size' => $this->size,
             'status' => $this->status,
+            'total_price' => $this->total_price,
             'create_at' => $this->create_at,
             'update_at' => $this->update_at,
         ];
