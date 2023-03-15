@@ -106,17 +106,51 @@
           class="primary-text border rounded-full secondary-bg p-4"
           shift-h="-8"
           shift-v="8"
-          scale = "2.5"
+          scale="2.5"
         >
         </b-icon>
       </div>
     </div>
+    <order-chart class="w-100 mt-5" :orderChart="chart"></order-chart>
+    <book-chart class="w-100 mt-5" :bookChart="books"></book-chart>
   </div>
 </template>
 
 <script>
 export default {
   layout: "admin",
+  data () {
+    return {
+      chart: [],
+      books: [],
+    }
+  },
+  async created () {
+    await this.fetchOrderChart();
+    await this.fetchBookChart()
+  },
+  methods: {
+    async fetchOrderChart() {
+      try {
+        const response = await this.$axios.get("/orders/total-orders-recent-year");
+        if (response.status === 200 && response.data) {
+          this.chart = response.data.data;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async fetchBookChart() {
+      try {
+        const response = await this.$axios.get("/orders/total-books-recent-year");
+        if (response.status === 200 && response.data) {
+          this.books = response.data.data;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  },
 };
 </script>
 

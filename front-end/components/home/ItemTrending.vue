@@ -1,52 +1,63 @@
 <template>
   <div class="d-flex flex-column align-items-center">
-    <a
-      href="https://www.bookswagon.com/book/spy-x-family-vol-6/9781974725137"
-      title="Spy X Family, Vol. 6"
-      @mouseover="isShowQuickView = 1"
-      @mouseout="isShowQuickView = 0"
+    <nuxt-link
+      :to="`/books/${book.id}`"
+      :title="book?.name"
       ><img
         class="position-relative"
-        src="https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/137/9781974725137.jpg"
-        data-src="https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/137/9781974725137.jpg"
-        onerror="handleInvalidImages(this,'mainimages')"
-        alt="Spy X Family, Vol. 6"
+        :src="
+          book?.image ||
+          'https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/notavailable.gif'
+        "
+        @error="setDefaultImage"
+        :alt="book?.name"
         :height="height"
-    />
-    <Transition name="slide-fade">
-    <div class="newtrendquick" :class="isShowQuickView ? '' : 'invisible'"> 
-      <a
-        class="quick-view themecolor"
-        data-toggle="modal"
-        data-target="#quickviewmodal"
-        data-id="2949456"
-        >Quick View</a
-      >
-    </div>
-    </Transition>
-    </a>
+        @mouseover="isShowQuickView = 1"
+        @mouseout="isShowQuickView = 0"
+      />
+      <Transition name="slide-fade">
+        <div class="newtrendquick" :class="isShowQuickView ? '' : 'invisible'">
+          <a
+            class="quick-view themecolor"
+            data-toggle="modal"
+            data-target="#quickviewmodal"
+            data-id="2949456"
+            >Quick View</a
+          >
+        </div>
+      </Transition>
+    </nuxt-link>
   </div>
 </template>
 
 <script>
 export default {
-    props: {
-        height: {
-            type: Number,
-            default: 200,
-        },
+  props: {
+    height: {
+      type: Number,
+      default: 200,
     },
+    book: {
+      type: Object,
+    },
+  },
   data() {
     return {
       isShowQuickView: 0,
+      defaultImage: 'https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/notavailable.gif'
     };
+  },
+  methods: {
+    setDefaultImage(event) {
+      event.target.src = this.defaultImage;
+    }
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .newtrendquick {
-    display: flex;
+  display: flex;
   width: 100%;
 }
 .quick-view {

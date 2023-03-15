@@ -128,7 +128,6 @@ export default {
         await this.$auth.setToken('local', "Bearer " + response.data.authorisation.token)
         await this.$auth.setUserToken(response.data.authorisation.token)
         await this.$auth.setUser(response.data.user)
-        console.log(this.$store.state)
       }
     },
   },

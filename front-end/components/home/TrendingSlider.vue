@@ -126,86 +126,30 @@
     >
       <!-- Slides with img slot -->
       <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-      <b-carousel-slide>
+      <b-carousel-slide v-for="(slide, index) in products" v-key="index">
         <template #img>
           <b-row>
             <b-col cols="3">
-              <HomeItemTrending :height="300" />
+              <HomeItemTrending :height="300" :book="slide[0]"/>
             </b-col>
             <b-col cols="6">
               <b-row align-v="center" class="h-100 justify-content-around">
                 <b-col cols="3">
-                  <HomeItemTrending />
+                  <HomeItemTrending :book="slide[1]"/>
                 </b-col>
                 <b-col cols="3">
-                  <HomeItemTrending />
+                  <HomeItemTrending :book="slide[2]"/>
                 </b-col>
                 <b-col cols="3">
-                  <HomeItemTrending />
+                  <HomeItemTrending :book="slide[3]"/>
                 </b-col>
                 <b-col cols="3">
-                  <HomeItemTrending />
+                  <HomeItemTrending :book="slide[4]"/>
                 </b-col>
               </b-row>
             </b-col>
             <b-col cols="3">
-              <HomeItemTrending :height="300" />
-            </b-col>
-          </b-row>
-        </template>
-      </b-carousel-slide>
-      <b-carousel-slide>
-        <template #img>
-          <b-row>
-            <b-col cols="3">
-              <HomeItemTrending :height="300" />
-            </b-col>
-            <b-col cols="6">
-              <b-row align-v="center" class="h-100 justify-content-around">
-                <b-col cols="3">
-                  <HomeItemTrending />
-                </b-col>
-                <b-col cols="3">
-                  <HomeItemTrending />
-                </b-col>
-                <b-col cols="3">
-                  <HomeItemTrending />
-                </b-col>
-                <b-col cols="3">
-                  <HomeItemTrending />
-                </b-col>
-              </b-row>
-            </b-col>
-            <b-col cols="3">
-              <HomeItemTrending :height="300" />
-            </b-col>
-          </b-row>
-        </template>
-      </b-carousel-slide>
-      <b-carousel-slide>
-        <template #img>
-          <b-row>
-            <b-col cols="3">
-              <HomeItemTrending :height="300" />
-            </b-col>
-            <b-col cols="6">
-              <b-row align-v="center" class="h-100 justify-content-around">
-                <b-col cols="3">
-                  <HomeItemTrending />
-                </b-col>
-                <b-col cols="3">
-                  <HomeItemTrending />
-                </b-col>
-                <b-col cols="3">
-                  <HomeItemTrending />
-                </b-col>
-                <b-col cols="3">
-                  <HomeItemTrending />
-                </b-col>
-              </b-row>
-            </b-col>
-            <b-col cols="3">
-              <HomeItemTrending :height="300" />
+              <HomeItemTrending :height="300" :book="slide[5]"/>
             </b-col>
           </b-row>
         </template>
@@ -219,7 +163,19 @@ export default {
   data() {
     return {
       isShowQuickView: 0,
+      products: [],
     };
+  },
+  methods: {
+    async getTrendingProduct() {
+      const response = await this.$axios.get("products/trending-book");
+      if (response.status === 200 && response.data) {
+        this.products = response.data.data;
+      }
+    },
+  },
+  created () {
+    this.getTrendingProduct();
   },
 };
 </script>
@@ -228,6 +184,7 @@ export default {
 .list-group-item {
   border: none !important;
 }
+
 .list-group-nav {
   width: 100%;
   padding: 24px;

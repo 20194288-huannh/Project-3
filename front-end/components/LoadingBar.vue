@@ -1,5 +1,5 @@
 <template>
-  <section v-if="loading">
+  <section v-if="isShow">
     <div class="loader loader-1">
       <div class="loader-outter"></div>
       <div class="loader-inner"></div>
@@ -8,18 +8,12 @@
 </template>
 <script>
 export default {
-  data: () => ({
-    loading: false,
-  }),
-  methods: {
-    start() {
-      this.loading = true;
-    },
-    finish() {
-      this.loading = false;
+  props: {
+    isShow: {
+      type: Boolean,
     },
   },
-};
+}
 </script>
 <style scoped>
 *,

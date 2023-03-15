@@ -14,12 +14,6 @@ export default {
   },
   methods: {
     async http(method, apiPath, data, config = {}, loading = true) {
-      if (loading) {
-        this.$nextTick(() => {
-          this.$nuxt.$loading.start()
-        })
-      }
-
       config = Object.assign(config, {
         url: apiPath,
         method,
@@ -58,11 +52,6 @@ export default {
           return
         }
       } finally {
-        if (loading) {
-          this.$nextTick(() => {
-            this.$nuxt.$loading.finish()
-          })
-        }
       }
     },
     async GET(apiPath, params, config = {}, loading = true) {

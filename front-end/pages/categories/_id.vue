@@ -268,7 +268,6 @@ export default {
       text: this.category.name,
       to: { name: `categories/${this.category.id}` },
     });
-    console.log(this.breadcrumbs);
   },
 };
 </script>

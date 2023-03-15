@@ -7,3 +7,13 @@ export const getters = {
     return state.auth.user;
   },
 };
+export const state = () => ({
+  isLoading: false
+})
+
+export const mutations = {
+  SET_LOADING(state, value) {
+    console.log(value)
+    state.isLoading = value
+  }
+}
