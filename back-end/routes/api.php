@@ -39,6 +39,7 @@ Route::get('user', [UserController::class, 'profile']);
         Route::get('best-sellers', 'getBestSellers');
         Route::get('new-arrivals', 'getNewArrivals');
         Route::get('wishlist', 'getWishList');
+        Route::get('trending-book', 'getTrendingProduct');
         Route::post('wishlist', 'likedProduct');
         Route::post('wishlist/{id}', 'destroyLikedProduct');
         Route::get('{id}', 'show');
@@ -64,6 +65,8 @@ Route::get('user', [UserController::class, 'profile']);
         Route::post('', 'store');
         Route::get('all', 'getOrderByUser');
         Route::post('{id}/delete', 'destroy');
+        Route::get('total-orders-recent-year', 'getTotalOrderRecentYear');
+        Route::get('total-books-recent-year', 'getTotalBookRecentYear');
     });
     Route::controller(AuthorController::class)->prefix('/authors')->group(function () {
         Route::get('', 'index');

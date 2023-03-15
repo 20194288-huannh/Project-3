@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
+use App\Models\Category;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends ApiController
 {
@@ -65,5 +68,51 @@ class OrderController extends ApiController
             'total_gross' => $total_gross
         ];
         return $this->responseOk($responseData);
+    }
+    public function getTotalOrderRecentYear()
+    {
+        $months = 12; // Lấy năm gần nhất
+        $results = DB::table('carts')
+            ->join('payments', 'payments.id', '=', 'carts.payment_id')
+            ->select(DB::raw('MONTH(payments.payment_date) as month'), DB::raw('SUM(total_price) as total'))
+            ->whereBetween(DB::raw('payments.payment_date'), [Carbon::now()->subMonths($months), Carbon::now()])
+            ->groupBy(DB::raw('MONTH(payments.payment_date)'))
+            ->orderBy(DB::raw('MAX(payments.payment_date)'), 'asc')
+            ->get();
+        info($results);
+        return $this->responseOk($results);
+    }
+    public function getTotalBookRecentYear()
+    {
+        $result = [];
+        $highest_categories = Category::whereNull('parent_id')->get();
+        foreach ($highest_categories as $highest_category) {
+            $total_quantity = 0;
+            $subCategories = $this->getAllSubCategories($highest_category);
+            $categoryIds = array_column($subCategories, 'id');
+            $total_quantity += DB::table('orders')
+                ->join('carts', 'orders.cart_id', '=', 'carts.id')
+                ->join('payments', 'payments.id', '=', 'carts.payment_id')
+                ->join('products', 'orders.product_id', '=', 'products.id')
+                ->join('category_products', 'category_products.product_id', '=', 'products.id')
+                ->whereBetween(DB::raw('payments.payment_date'), [Carbon::now()->subMonths(12), Carbon::now()])
+                ->whereIn('category_products.category_id', $categoryIds)
+                ->sum('orders.quantity');
+            array_push($result, [
+                'category' => $highest_category->name,
+                'total' => $total_quantity
+            ]);
+        }
+        return $this->responseOk($result);
+    }
+    function getAllSubCategories($category) {
+        $subCategories = [];
+    
+        foreach ($category->children as $child) {
+            $subCategories[] = $child;
+            $subCategories = array_merge($subCategories, $this->getAllSubCategories($child));
+        }
+    
+        return $subCategories;
     }
 }

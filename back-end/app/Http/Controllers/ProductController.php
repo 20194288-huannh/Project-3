@@ -206,4 +206,14 @@ class ProductController extends ApiController
         return $this->response(['success' => true, 'data' => $data]);
     }
 
+    public function getTrendingProduct(Request $request) {
+        $products = Product::inRandomOrder()
+            ->limit(24)
+            ->get()
+            ->toArray();
+        $chunks = array_chunk($products, 6);
+        $data = collect($chunks);
+        return $this->response(['success' => true, 'data' => $data]);
+    }
+
 }
