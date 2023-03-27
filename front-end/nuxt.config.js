@@ -23,6 +23,9 @@ export default {
       src: "@/plugins/plugin",
       mode: "client",
     },
+    {
+      src: '@/plugins/vue-infinite-loading.js', 
+    },
     "~/plugins/api",
     "~/plugins/mixins",
   ],

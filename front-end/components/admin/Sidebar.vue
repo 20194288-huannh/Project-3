@@ -1,5 +1,9 @@
 <template>
-  <div class="bg-white" id="sidebar-wrapper">
+  <div
+    class="sidebar"
+    id="sidebar-wrapper"
+    :style="{ backgroundImage: 'url(' + require('@/assets/images/sidebar-5.jpg') + ')' }"
+  >
     <div
       class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom"
     >
@@ -7,56 +11,117 @@
     </div>
     <div class="list-group list-group-flush my-3">
       <nuxt-link
-        class="list-group-item list-group-item-action bg-transparent second-text active"
+        class="list-group-item list-group-item-action bg-transparent second-text active color-white"
         to="dashboard"
-        ><b-icon icon="bar-chart-fill" variant="success" class="mr-2"></b-icon
-        >Dashboard</nuxt-link
       >
+        <b-icon scale="1.5" icon="bar-chart-fill" variant="light" class="mr-4"></b-icon
+        >DASHBOARD
+      </nuxt-link>
       <nuxt-link
         to="users"
-        class="list-group-item list-group-item-action bg-transparent second-text fw-bold"
-        ><b-icon icon="person-fill" variant="success" class="mr-2"></b-icon
-        >Users</nuxt-link
+        class="list-group-item list-group-item-action bg-transparent second-text fw-bold color-white "
       >
+        <b-icon scale="1.5" icon="person-fill" variant="light" class="mr-4"></b-icon>USERS
+      </nuxt-link>
       <nuxt-link
         to="books"
-        class="list-group-item list-group-item-action bg-transparent second-text fw-bold"
-        ><b-icon icon="book-fill" variant="success" class="mr-2"></b-icon
-        >Books</nuxt-link
+        class="list-group-item list-group-item-action bg-transparent second-text fw-bold color-white "
       >
+        <b-icon scale="1.5" icon="book-fill" variant="light" class="mr-4"></b-icon>BOOKS
+      </nuxt-link>
       <nuxt-link
         to="categories"
-        class="list-group-item list-group-item-action bg-transparent second-text fw-bold"
-        ><b-icon icon="list" variant="success" class="mr-2"></b-icon
-        >Category</nuxt-link
+        class="list-group-item list-group-item-action bg-transparent second-text fw-bold color-white "
       >
+        <b-icon scale="1.5" icon="list" variant="light" class="mr-4"></b-icon>CATEGORY
+      </nuxt-link>
       <nuxt-link
         to="#"
-        class="list-group-item list-group-item-action bg-transparent second-text fw-bold"
-        ><b-icon icon="stickies-fill" variant="success" class="mr-2"></b-icon
-        >Voucher</nuxt-link
+        class="list-group-item list-group-item-action bg-transparent second-text fw-bold color-white "
       >
+        <b-icon scale="1.5" icon="stickies-fill" variant="light" class="mr-4"></b-icon
+        >VOUCHER
+      </nuxt-link>
       <nuxt-link
         to="#"
-        class="list-group-item list-group-item-action bg-transparent second-text fw-bold"
-        ><b-icon icon="cart-fill" variant="success" class="mr-2"></b-icon
-        >Orders</nuxt-link
+        class="list-group-item list-group-item-action bg-transparent second-text fw-bold color-white "
       >
+        <b-icon scale="1.5" icon="cart-fill" variant="light" class="mr-4"></b-icon>ORDERS
+      </nuxt-link>
       <nuxt-link
         to="#"
         class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"
-        ><b-icon icon="box-arrow-right" variant="success" class="mr-2"></b-icon
-        >Logout</nuxt-link
       >
+        <b-icon icon="box-arrow-right" variant="light" class="mr-2"></b-icon
+        >Logout
+      </nuxt-link>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    title: {
+      type: String,
+      default: "Vue LBD",
+    },
+    backgroundColor: {
+      type: String,
+      default: "black",
+      validator: (value) => {
+        let acceptedValues = [
+          "",
+          "blue",
+          "azure",
+          "green",
+          "orange",
+          "red",
+          "purple",
+          "black",
+        ];
+        return acceptedValues.indexOf(value) !== -1;
+      },
+    },
+    activeColor: {
+      type: String,
+      default: "light",
+      validator: (value) => {
+        let acceptedValues = [
+          "primary",
+          "info",
+          "light",
+          "warning",
+          "danger",
+        ];
+        return acceptedValues.indexOf(value) !== -1;
+      },
+    },
+    sidebarLinks: {
+      type: Array,
+      default: () => [],
+    },
+    autoClose: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  computed: {
+    sidebarStyle() {
+      return {
+        backgroundImage: `url(${this.backgroundImage})`,
+      };
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
+.sidebar {
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
@@ -94,9 +159,11 @@ export default {};
 
 .list-group-item.active {
   background-color: transparent;
-  color: var(--main-text-color);
   font-weight: bold;
   border: none;
+}
+.color-white{
+  color: #fff;
 }
 
 @media (min-width: 768px) {
@@ -113,4 +180,5 @@ export default {};
     margin-left: -15rem;
   }
 }
+
 </style>

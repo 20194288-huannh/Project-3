@@ -54,7 +54,7 @@
                         <nuxt-link :to="`${loggedIn ? '/wishlist' : 'login'}`"><b-icon icon="heart" scale="2" variant="danger"></b-icon></nuxt-link>
                     </b-list-group-item>
                     <b-list-group-item class="d-flex justify-content-center">
-                        <b-icon icon="cart3" scale="2" variant="danger"></b-icon>
+                        <nuxt-link :to="`${loggedIn ? '/payment' : 'login'}`"><b-icon icon="cart3" scale="2" variant="danger"></b-icon></nuxt-link>
                     </b-list-group-item>
                 </b-list-group>
             </b-row>

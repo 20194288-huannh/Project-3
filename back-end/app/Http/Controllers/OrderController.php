@@ -23,15 +23,14 @@ class OrderController extends ApiController
     }
     public function store(Request $request)
     {
-        $order = Order::where('user_id', auth()->user()->id)->where('product_id', $request->product_id)->first();
+        $order = Order::where('user_id', auth()->user()->id)->where('product_id', $request->product_id)->whereNull('cart_id')->first();
         if ($order) {
             return $this->responseOk($order);
         }
         $order = Order::create([
             'user_id' => auth()->user()->id,
             'product_id' => $request->product_id,
-            'voucher_id' => $request->voucher_id,
-            'cart_id' => $request->cart_id,
+            'voucher_id' => $request->voucher_id ?? null,
             'quantity' => 1,
             'status' => 1,
         ]);
@@ -57,7 +56,7 @@ class OrderController extends ApiController
     }
     public function getOrderByUser()
     {
-        $orders = Order::where('user_id', auth()->user()->id)->latest()->paginate();
+        $orders = Order::where('user_id', auth()->user()->id)->whereNull('cart_id')->latest()->get();
         $orders = $orders->map(function ($order) {
             $order->total_price = $order->product->price * $order->quantity;
             return $order;
@@ -79,7 +78,6 @@ class OrderController extends ApiController
             ->groupBy(DB::raw('MONTH(payments.payment_date)'))
             ->orderBy(DB::raw('MAX(payments.payment_date)'), 'asc')
             ->get();
-        info($results);
         return $this->responseOk($results);
     }
     public function getTotalBookRecentYear()

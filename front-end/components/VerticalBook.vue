@@ -15,8 +15,10 @@
             book?.image ||
             'https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/notavailable.gif'
           "
-          alt="Wuthering Heights"
+          :alt="book?.name"
+          @error="setDefaultImage"
         />
+        
       </nuxt-link>
       <div class="title">
         <b-button
@@ -36,12 +38,12 @@
           }}</span>
           <div class="d-flex justify-content-center">
             <span
-              class="actualprice themecolor font-weight-bold"
+              class="actualprice themecolor font-weight-bold mr-2"
               v-if="book?.price"
-              >₹{{ book.price }}</span
+              >₹{{ salePrice }}</span
             >
             <span class="initialprice"
-              ><del>₹{{ salePrice }}</del></span
+              ><del>₹{{ book.price }}</del></span
             >
           </div>
         </b-card-text>
@@ -60,17 +62,21 @@ export default {
   data() {
     return {
       isShowQuickView: 0,
+      defaultImage: 'https://d2g9wbak88g7ch.cloudfront.net/productimages/mainimages/notavailable.gif'
     };
   },
   methods: {
     showQuickView(id) {
       this.$emit("show-modal-quick-view", id);
     },
+    setDefaultImage(event) {
+      event.target.src = this.defaultImage;
+    }
   },
   computed: {
     salePrice() {
       return Math.floor(this.book?.price - this.book?.price * this.book?.sale / 100);
-    },
+    }
   },
 };
 </script>

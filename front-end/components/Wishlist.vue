@@ -1,7 +1,5 @@
 <template>
 <b-container class="d-flex flex-column justify-content-center align-items-center mt-5">
-    <b-icon icon="heart" scale="4" variant="danger" class="mt-4 mb-4"></b-icon>
-    <h1 class="text-center font-weight-bold mt-3 mb-4">My WishList</h1>
     <b-table :items="books" :fields="fields">
         <template #cell(actions)="row">
             <div class="text-muted" style="font-size: 14px">Added on: {{row.item?.created_at | formatDate}}</div>

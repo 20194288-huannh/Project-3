@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <h4>Featured Authors</h4>
+    <h4 class="mt-4 ml-3 font-italic">Featured Authors</h4>
     <div class="grid-container">
       <ItemAuthor v-for="author in authors" :key="author.id" :author="author"/>
     </div>

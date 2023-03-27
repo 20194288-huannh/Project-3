@@ -1,7 +1,7 @@
 <template>
 <b-container style="background-color: #85879" class="mt-5">
     <b-row>
-        <b-col cols="8">
+        <b-col cols="12">
             <b-card>
                 <h4 class="text-center font-weight-bold">Payment</h4>
                 <b-row>
@@ -42,6 +42,32 @@
                                 </div>
                             </template>
                         </b-table>
+                    </b-col>
+                </b-row>
+                <b-row style="border-top: 1px solid #" class="pt-3">
+                    <b-col cols="6"></b-col>
+                    <b-col cols="6" style="font-size: 13px">
+                        <b-row>
+                            <b-col cols="3">
+                                <div>Total Gross</div>
+                                <div>Shipping</div>
+                                <div class="font-weight-bold">Amount Payable</div>
+                            </b-col>
+                            <b-col cols="3">
+                                <div>: ₹ {{ total_gross }}</div>
+                                <div>: ₹ 78</div>
+                                <div style="color: #009900" class="font-weight-bold">
+                                    : ₹ {{ total_gross + 78 }}
+                                </div>
+                            </b-col>
+                            <b-col cols="6">
+                                <div style="color: #009900" class="font-weight-bold">
+                                    Ships within 14-16 days.
+                                </div>
+                                <div></div>
+                                <div>(International Shipping Calculator)</div>
+                            </b-col>
+                        </b-row>
                     </b-col>
                 </b-row>
                 <div class="d-flex flex-column">
@@ -104,49 +130,8 @@
                 </button>
             </b-card>
         </b-col>
-        <b-col cols="4">
-            <b-card>
-                <b-card-body>
-                    <h6>
-                        <svg class="svg-inline--fa fa-rectangle-list" style="height: 1em" aria-hidden="true" focusable="false" data-prefix="far" data-icon="rectangle-list" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg="">
-                            <path fill="currentColor" d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H512c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H512c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm96 64a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm104 0c0-13.3 10.7-24 24-24H448c13.3 0 24 10.7 24 24s-10.7 24-24 24H224c-13.3 0-24-10.7-24-24zm0 96c0-13.3 10.7-24 24-24H448c13.3 0 24 10.7 24 24s-10.7 24-24 24H224c-13.3 0-24-10.7-24-24zm0 96c0-13.3 10.7-24 24-24H448c13.3 0 24 10.7 24 24s-10.7 24-24 24H224c-13.3 0-24-10.7-24-24zm-72-64a32 32 0 1 1 0-64 32 32 0 1 1 0 64zM96 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path>
-                        </svg>
-                        Details
-                    </h6>
-                    <hr />
-                    <table class="table table-striped table-bordered hide-form" style="color: black">
-                        <tbody>
-                            <tr>
-                                <td><b>Actual Price:</b></td>
-                                <td id="fee-total-card-table" class="content-sum-price text-danger text-center notranslate">
-                                    19.300 VNĐ
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b>Shipping:</b></td>
-                                <td id="fee-total-card-table" class="content-sum-price text-danger text-center notranslate">
-                                    78
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b>Voucher:</b></td>
-                                <td id="fee-total-card-table" class="content-sum-price text-danger text-center notranslate">
-                                    None
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b>Price:</b></td>
-                                <td id="fee-total-card-table" class="content-sum-price text-danger text-center notranslate">
-                                    None
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </b-card-body>
-            </b-card>
-        </b-col>
     </b-row>
-    <b-modal centered scrollable size="l" id="qr-modal">
+    <b-modal centered scrollable size="l" id="qr-modal" @ok="handleOk">
         <template #modal-title class="title"> Payments </template>
         <img src="~/assets/images/QR.jpg" class="w-100 h-100"></img>
     </b-modal>
@@ -195,6 +180,21 @@ export default {
                 this.total_gross = response.data.data.total_gross;
             }
         },
+        async remove(id) {
+            const response = await this.$axios.post(`/orders/${id}/delete`);
+            if (response.status === 200 && response.data) {
+                this.$toast.success("Remove order success!");
+                this.fetchOrders();
+            } else {
+                this.$toast.error("Fail");
+            }
+        },
+        async handleOk () {
+            const response = await this.$axios.post("/carts", {payment_method_id: this.item_payment});
+            if (response.status === 200 && response.data) {
+                console.log(response.data)
+            }
+        }
     },
     created() {
         this.fetchOrders();

@@ -16,8 +16,11 @@ class CartResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => new UserResource($this->user),
+            'user' => $this->user ? new UserResource($this->user) : null,
             'total_price' => $this->total_price,
+            'payment' => $this->payment ?? null,
+            'orders' => $this->orders ? OrderResource::collection($this->orders) : null,
+            'payment_method' => $this->payment->paymentMethod->name ?? null
         ];
     }
 }

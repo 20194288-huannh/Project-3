@@ -39,28 +39,8 @@
   color: var(--second-text-color);
 }
 
-.primary-bg {
-  background-color: var(--main-bg-color);
-}
-
-.secondary-bg {
-  background-color: var(--second-bg-color);
-}
-
 .rounded-full {
   border-radius: 100%;
-}
-
-#wrapper {
-  overflow-x: hidden;
-  background-image: linear-gradient(
-    to right,
-    #baf3d7,
-    #c2f5de,
-    #cbf7e4,
-    #d4f8ea,
-    #ddfaef
-  );
 }
 
 #sidebar-wrapper {

@@ -31,6 +31,9 @@ Route::get('user', [UserController::class, 'profile']);
     Route::controller(UserController::class)->prefix('/users')->group(function () {
         Route::get('', 'index');
         Route::post('', 'store');
+        Route::controller(CartController::class)->prefix('{user_id}/carts')->group(function () {
+            Route::get('', 'getCartByUser');
+        });
         Route::get('{id}', 'show');
     });
     Route::controller(ProductController::class)->prefix('/products')->group(function () {

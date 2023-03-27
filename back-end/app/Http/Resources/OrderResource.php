@@ -21,6 +21,7 @@ class OrderResource extends JsonResource
             'product_id' => $this->product_id,
             'product' => $this->product_id ? new ProductResource($this->product) : null,
             'voucher' => $this->voucher ? new VoucherResource($this->voucher) : null,
+            'cart' => $this->cart ? new VoucherResource($this->cart) : null,
             'quantity' => $this->quantity,
             'size' => $this->size,
             'status' => $this->status,
