@@ -31,14 +31,13 @@
                             </template>
                             <template #cell(price)="row">
                                 <div class="d-flex flex-column justify-content-between">
-                                    <span class="text-muted actual-price">${{ row.item?.product?.price }}</span>
-                                    <span class="text-muted">${{ row.item?.product?.price }}</span>
+                                    <span class="text-muted actual-price text-decoration-line-through">${{ row.item?.product?.price }}</span>
+                                    <span class="text-muted">${{ row.item?.actual_price }}</span>
                                 </div>
                             </template>
                             <template #cell(total_price)="row">
                                 <div class="d-flex flex-column justify-content-between">
-                                    <span class="text-muted actual-price">${{ row.item?.product?.price }}</span>
-                                    <span class="text-muted">${{ row.item?.product?.price }}</span>
+                                    <span class="text-muted">${{ row.item?.total_price }}</span>
                                 </div>
                             </template>
                         </b-table>
@@ -189,8 +188,10 @@ export default {
                 this.$toast.error("Fail");
             }
         },
-        async handleOk () {
-            const response = await this.$axios.post("/carts", {payment_method_id: this.item_payment});
+        async handleOk() {
+            const response = await this.$axios.post("/carts", {
+                payment_method_id: this.item_payment
+            });
             if (response.status === 200 && response.data) {
                 console.log(response.data)
             }
@@ -227,5 +228,8 @@ svg:not(:root).svg-inline--fa {
 
 .active {
     border: 2px solid #17a2b8;
+}
+.text-decoration-line-through {
+  text-decoration: line-through;
 }
 </style>

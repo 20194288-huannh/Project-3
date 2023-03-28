@@ -1,26 +1,24 @@
 <template>
-     <div class="d-flex" id="wrapper">
-        <!-- Sidebar -->
-        <AdminSidebar />
-        <!-- /#sidebar-wrapper -->
+  <div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <AdminSidebar />
+    <!-- /#sidebar-wrapper -->
 
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <AdminNav/>
-
-            <div class="container-fluid px-4">
-                <Nuxt />
-
-            </div>
-        </div>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid px-4 content">
+        <Nuxt />
+      </div>
     </div>
-    <!-- /#page-content-wrapper -->
+  </div>
+  <!-- /#page-content-wrapper -->
 </template>
 
 <script>
-    export default {
-        
-    }
+import checkAdmin from '../middleware/checkAdmin'
+export default {
+  middleware: [checkAdmin],
+};
 </script>
 
 <style lang="css" scoped>
@@ -83,6 +81,11 @@
   color: var(--main-text-color);
   font-weight: bold;
   border: none;
+}
+.content {
+  max-height: 100vh;
+  overflow-y: auto; /* chỉ cuộn phần dọc */
+  overflow-x: hidden;
 }
 
 @media (min-width: 768px) {

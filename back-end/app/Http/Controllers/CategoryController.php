@@ -10,7 +10,12 @@ class CategoryController extends ApiController
 {
     public function index()
     {
-        $categories = Category::paginate();
+        $categories = Category::all();
+        return $this->response(['message' => 'success', 'data' => CategoryResource::collection($categories)]);
+    }
+    public function getCategoryLeaf()
+    {
+        $categories = Category::where('level', 3)->get();
         return $this->response(['message' => 'success', 'data' => CategoryResource::collection($categories)]);
     }
     public function show($category_id)

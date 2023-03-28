@@ -89,17 +89,14 @@
                         <span class="text-muted actual-price"
                           >${{ row.item?.product?.price }}</span
                         >
-                        <span class="text-muted"
-                          >${{ row.item?.product?.price }}</span
+                        <span class="text-muted text-decoration-line-through"
+                          >${{ row.item?.actual_price }}</span
                         >
                       </div>
                     </template>
                     <template #cell(total_price)="row">
                       <div class="d-flex flex-column justify-content-between">
                         <span class="text-muted actual-price"
-                          >${{ row.item?.product?.price }}</span
-                        >
-                        <span class="text-muted"
                           >${{ row.item?.product?.price }}</span
                         >
                       </div>
@@ -113,7 +110,7 @@
             <template #title>
               <span class="title">Wishlist</span>
             </template>
-            <h4>Orders History</h4>
+            <h4>WishList</h4>
             <Wishlist />
           </b-tab>
         </b-tabs>
@@ -167,7 +164,6 @@ export default {
       const response = await this.$axios.get(`/users/${this.user.id}/carts`);
       if (response.status === 200 && response.data) {
         this.orders = response.data.data;
-        console.log(this.orders);
       }
     },
   },

@@ -16,7 +16,8 @@ class OrderController extends ApiController
     {
         $orders = Order::latest()->paginate();
         $orders = $orders->map(function ($order) {
-            $order->total_price = $order->product->price * $order->quantity;
+            $order->actual_price = $order->product->price * (100 - $order->product->sale) / 100;
+            $order->total_price = $order->actual_price * $order->quantity;
             return $order;
         });
         return $this->response(['message' => 'success', 'data' => new OrderCollection($orders)]);
@@ -44,10 +45,16 @@ class OrderController extends ApiController
         ], [
             'voucher_id' => $request->voucher_id,
             'cart_id' => $request->cart_id,
-            'quantity' => 1,
-            'status' => 1,
+            'quantity' => $request->quantity ?? 1,
+            'status' => $request->status ?? 1,
         ]);
         return $this->responseOk(new OrderResource($order));
+    }
+    public function updateQuantity(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->update(['quantity' => $request->quantity]);
+        return $this->response(['success' => true, 'data' => $order]);
     }
     public function destroy(int $id)
     {
@@ -58,7 +65,8 @@ class OrderController extends ApiController
     {
         $orders = Order::where('user_id', auth()->user()->id)->whereNull('cart_id')->latest()->get();
         $orders = $orders->map(function ($order) {
-            $order->total_price = $order->product->price * $order->quantity;
+            $order->actual_price = $order->product->price * (100 - $order->product->sale) / 100;
+            $order->total_price = $order->actual_price * $order->quantity;
             return $order;
         });
         $total_gross = array_sum($orders->pluck('total_price')->toArray());

@@ -104,7 +104,8 @@ export default {
         this.$toast.success("Logged In!")
         await this.$auth.setToken('local', "Bearer " + res.authorisation.token)
         await this.$auth.setUserToken(response.authorisation.token)
-        if (this.$store.state.user.role == 1) {
+        console.log(this.$store.state.auth)
+        if (this.$store.state.auth.user.role == 1) {
           this.$router.push('/admin/books')
         }
         this.$router.go(-1)

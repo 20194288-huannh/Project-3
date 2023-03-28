@@ -38,19 +38,25 @@ Route::get('user', [UserController::class, 'profile']);
     });
     Route::controller(ProductController::class)->prefix('/products')->group(function () {
         Route::get('', 'index');
+        Route::post('', 'store');
         Route::get('fiction-book', 'getFictionBook');
         Route::get('best-sellers', 'getBestSellers');
         Route::get('new-arrivals', 'getNewArrivals');
+        Route::get('award-winner', 'getAwardWinner');
+        Route::get('minimum-forty-percent-discount', 'getMinimumFortyPercentDiscount');
         Route::get('wishlist', 'getWishList');
+        Route::get('search', 'getProductBySearch');
         Route::get('trending-book', 'getTrendingProduct');
         Route::post('wishlist', 'likedProduct');
         Route::post('wishlist/{id}', 'destroyLikedProduct');
         Route::get('{id}', 'show');
         Route::post('{id}/delete', 'destroy');
+        Route::post('{id}', 'update');
     });
     Route::controller(CategoryController::class)->prefix('categories')->group(function () {
         Route::get('', 'index');
         Route::post('', 'store');
+        Route::get('leaf', 'getCategoryLeaf');
         Route::get('highest', 'getHighestCategory');
         Route::get('{category_id}', 'show');
         Route::get('{category_id}/child', 'getChildCategory');
@@ -70,6 +76,7 @@ Route::get('user', [UserController::class, 'profile']);
         Route::post('{id}/delete', 'destroy');
         Route::get('total-orders-recent-year', 'getTotalOrderRecentYear');
         Route::get('total-books-recent-year', 'getTotalBookRecentYear');
+        Route::post('{id}/update-quantity', 'updateQuantity');
     });
     Route::controller(AuthorController::class)->prefix('/authors')->group(function () {
         Route::get('', 'index');

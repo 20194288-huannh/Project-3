@@ -12,38 +12,38 @@
     <div class="list-group list-group-flush my-3">
       <nuxt-link
         class="list-group-item list-group-item-action bg-transparent second-text active color-white"
-        to="dashboard"
+        to="/admin/dashboard"
       >
         <b-icon scale="1.5" icon="bar-chart-fill" variant="light" class="mr-4"></b-icon
         >DASHBOARD
       </nuxt-link>
       <nuxt-link
-        to="users"
+        to="/admin/users"
         class="list-group-item list-group-item-action bg-transparent second-text fw-bold color-white "
       >
         <b-icon scale="1.5" icon="person-fill" variant="light" class="mr-4"></b-icon>USERS
       </nuxt-link>
       <nuxt-link
-        to="books"
+        to="/admin/books"
         class="list-group-item list-group-item-action bg-transparent second-text fw-bold color-white "
       >
         <b-icon scale="1.5" icon="book-fill" variant="light" class="mr-4"></b-icon>BOOKS
       </nuxt-link>
       <nuxt-link
-        to="categories"
+        to="/admin/categories"
         class="list-group-item list-group-item-action bg-transparent second-text fw-bold color-white "
       >
         <b-icon scale="1.5" icon="list" variant="light" class="mr-4"></b-icon>CATEGORY
       </nuxt-link>
       <nuxt-link
-        to="#"
+        to="/admin/voucher"
         class="list-group-item list-group-item-action bg-transparent second-text fw-bold color-white "
       >
         <b-icon scale="1.5" icon="stickies-fill" variant="light" class="mr-4"></b-icon
         >VOUCHER
       </nuxt-link>
       <nuxt-link
-        to="#"
+        to="/admin/orders"
         class="list-group-item list-group-item-action bg-transparent second-text fw-bold color-white "
       >
         <b-icon scale="1.5" icon="cart-fill" variant="light" class="mr-4"></b-icon>ORDERS

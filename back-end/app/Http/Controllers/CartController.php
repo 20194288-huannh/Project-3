@@ -14,7 +14,14 @@ class CartController extends ApiController
 {
     public function index()
     {
-        $carts = Cart::paginate();
+        $carts = Cart::latest()->paginate();
+        foreach ($carts as $cart) {
+            $cart->orders = $cart->orders->map(function ($order) {
+                $order->actual_price = $order->product->price * (100 - $order->product->sale) / 100;
+                $order->total_price = $order->actual_price * $order->quantity;
+                return $order;
+            });
+        }
         return $this->response(['message' => 'success', 'data' => CartResource::collection($carts)]);
     }
     public function getCartByOrder($order_id)
@@ -25,13 +32,21 @@ class CartController extends ApiController
     public function getCartByUser($user_id)
     {
         $carts = Cart::where('user_id', $user_id)->latest()->get();
+        foreach ($carts as $cart) {
+            $cart->orders = $cart->orders->map(function ($order) {
+                $order->actual_price = $order->product->price * (100 - $order->product->sale) / 100;
+                $order->total_price = $order->actual_price * $order->quantity;
+                return $order;
+            });
+        }
         return $this->response(['message' => 'success', 'data' => CartResource::collection($carts)]);
     }
     public function store(Request $request)
     {
         $orders = Order::where('user_id', auth()->user()->id)->whereNull('cart_id')->latest()->get();
         $orders = $orders->map(function ($order) {
-            $order->total_price = $order->product->price * $order->quantity;
+            $order->actual_price = $order->product->price * (100 - $order->product->sale) / 100;
+            $order->total_price = $order->actual_price * $order->quantity;
             return $order;
         });
         $total_gross = array_sum($orders->pluck('total_price')->toArray());

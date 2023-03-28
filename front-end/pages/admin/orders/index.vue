@@ -1,56 +1,80 @@
 <template>
   <div class="my-5">
-    <b-form inline>
-      <label class="ml-3">Category</label>
-      <b-form-select
-        v-model="search.category_level_1"
-        class="mb-2 mx-sm-2 mb-sm-0"
-        :options="categories_level_1"
-        :value="null"
-        @change="category_level_1()"
-      />
-      <label class="ml-3"></label>
-      <b-form-select
-        v-if="search.category_level_1"
-        v-model="search.category_level_2"
-        class="mb-2 mx-sm-2 mb-sm-0"
-        :options="categories_level_2"
-        :value="null"
-        @change="category_level_2()"
-      />
-    </b-form>
-    <h4 class="mb-3">Category</h4>
+    <h4 class="mb-3">Orders</h4>
     <div>
-      <b-table-simple per-page="15" :current-page="page" id="my-table">
-        <b-thead>
-          <b-tr>
-            <b-th scope="col" width="50">#</b-th>
-            <b-th scope="col">Name</b-th>
-            <b-th scope="col"></b-th>
-          </b-tr>
-        </b-thead>
-        <tbody>
-          <b-tr v-for="category in selected_sub_category" :key="category.id">
-            <b-th scope="row" class="align-middle">{{ category.id }}</b-th>
-            <b-td>{{ category.name }}</b-td>
-            <b-td>
-              <b-button variant="primary"
-                ><b-icon icon="pencil-fill" scale="0.75"></b-icon
-              ></b-button>
-              <b-button variant="danger" @click="deleteCategory(book.id)"
-                ><b-icon icon="trash-fill" scale="0.75"></b-icon
-              ></b-button>
-            </b-td>
-          </b-tr>
-        </tbody>
-      </b-table-simple>
-      <b-pagination
-        v-model="page"
-        :total-rows="pagination?.total"
-        per-page="15"
-        @input="paginate"
-        :aria-controls="'my-table'"
-      ></b-pagination>
+      <b-row>
+        <b-table per-page="15" :current-page="page" hover :items="orders" :fields="fields" id="my-table">
+          <template #cell(month)="row">
+            {{
+              new Date(row.item.payment.payment_date).toLocaleString(
+                "default",
+                { month: "long" }
+              )
+            }}
+          </template>
+          <template #cell(user_name)="row">
+            {{ row.item.user.name }}
+          </template>
+          <template #cell(total_price)="row">
+            {{ row.item.total_price }}
+          </template>
+          <template #cell(date)="row">
+            {{ row.item.payment.payment_date }}
+          </template>
+          <template #cell(payment_method)="row">
+            {{ row.item.payment_method }}
+          </template>
+          <template #cell(collapse)="row">
+            <b-link size="sm" @click="row.toggleDetails" class="mr-2">
+              {{ row.detailsShowing ? "Hide" : "Show" }} Detail
+            </b-link>
+          </template>
+          <template #row-details="row">
+            <b-card>
+              <b-table :items="row.item.orders" :fields="fieldsOrderTable">
+                <template #cell(id)="row">
+                  <span>{{ row.item.product.id }}</span>
+                </template>
+                <template #cell(description)="row">
+                  <div class="d-flex">
+                    <b-img
+                      left
+                      :src="row.item?.product?.image"
+                      alt="Left image"
+                      height="50"
+                      class="mr-3"
+                    ></b-img>
+                    <div>
+                      <div>
+                        <strong>{{ row.item?.product?.name }}</strong>
+                      </div>
+                      <div>by {{ row.item?.product?.author }}</div>
+                    </div>
+                  </div>
+                </template>
+                <template #cell(price)="row">
+                  <div class="d-flex flex-column justify-content-between">
+                    <span class="text-muted actual-price"
+                      >${{ row.item?.product?.price }}</span
+                    >
+                    <span class="text-muted text-decoration-line-through"
+                      >${{ row.item?.actual_price }}</span
+                    >
+                  </div>
+                </template>
+                <template #cell(total_price)="row">
+                  <div class="d-flex flex-column justify-content-between">
+                    <span class="text-muted actual-price"
+                      >${{ row.item?.product?.price }}</span
+                    >
+                  </div>
+                </template>
+              </b-table>
+            </b-card>
+          </template>
+        </b-table>
+      </b-row>
+      <b-pagination v-model="page" :total-rows="pagination?.total" per-page="15" @input="paginate" :aria-controls="'my-table'"></b-pagination>
     </div>
   </div>
 </template>
@@ -60,102 +84,69 @@ export default {
   layout: "admin",
   data() {
     return {
-      books: [],
+      orders: [],
       pagination: null,
       page: 1,
-      selected_category: null,
-      selected_sub_category: [],
-      search: {
-        category_level_1: null,
-        category_level_2: null,
-        category_level_3: null,
-      },
-      categories_level_1: [],
-      categories_level_2: [],
-      categories_level_3: [],
+      fields: [
+        "Month",
+        {
+          key: "user_name",
+          label: "User",
+        },
+        {
+          key: "total_price",
+          label: "Total Price",
+        },
+        "Date",
+        {
+          key: "payment_method",
+          label: "Payment Method",
+        },
+        {
+          key: "collapse",
+          label: "",
+        },
+      ],
+      fieldsOrderTable: [
+        { key: "id", label: "Sr.#" },
+        { key: "description", label: "Item Description" },
+        { key: "quantity", label: "Quantity" },
+        { key: "price", label: "Item Price" },
+        { key: "total_price", label: "Total Price" },
+      ],
     };
   },
   methods: {
-    async fetchHighestCategory() {
-      try {
-        this.selected_category = this.search.category_level_2 || this.search.category_level_1
-        const response = await this.$axios.get("/categories/highest");
-        if (response.status === 200 && response.data) {
-          this.categories_level_1 = response.data.data;
-          this.selected_sub_category = this.categories_level_1
-          this.categories_level_1 = this.categories_level_1.map(function (
-            $item
-          ) {
-            return {
-              value: $item.id,
-              text: $item.name,
-            };
-          });
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    async fetchCategoryLevel2() {
-      try {
-        this.selected_category = this.search.category_level_2 || this.search.category_level_1
-        const response = await this.$axios.get(
-          `/categories/${this.search.category_level_1}/child`
-        );
-        if (response.status === 200 && response.data) {
-          this.categories_level_2 = response.data.data;
-          this.selected_sub_category = this.categories_level_2
-          this.categories_level_2 = this.categories_level_2.map(function (
-            $item
-          ) {
-            return {
-              value: $item.id,
-              text: $item.name,
-            };
-          });
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    async fetchCategoryLevel3() {
-      try {
-        const response = await this.$axios.get(
-          `/categories/${this.search.category_level_2}/child`
-        );
-        if (response.status === 200 && response.data) {
-          this.categories_level_3 = response.data.data;
-          this.selected_sub_category = this.categories_level_3
-          this.categories_level_3 = this.categories_level_3.map(function (
-            $item
-          ) {
-            return {
-              value: $item.id,
-              text: $item.name,
-            };
-          });
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    },
     paginate(page) {
-      this.$router.push({ path: this.$route.path, query: { page: this.page } });
+      this.$router.push({
+        path: this.$route.path,
+        query: {
+          page: this.page,
+        },
+      });
+      this.fetchOrders();
     },
-    category_level_1() {
-      this.fetchCategoryLevel2()
-    },
-    category_level_2() {
-      this.fetchCategoryLevel3()
-    },
-    category_level_3() {
-      
+    async fetchOrders() {
+      try {
+        const response = await this.$axios.get("/carts", {
+          params: {
+            page: this.page,
+          },
+        });
+        if (response.status === 200 && response.data) {
+          this.orders = response.data.data;
+          this.pagination = response.data.data.meta;
+          this.page = this.pagination.current_page;
+        }
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
   created() {},
   mounted() {
+    this.fetchOrders();
     this.page = this.$route.query.page || 1;
-    this.fetchHighestCategory();
   },
 };
 </script>

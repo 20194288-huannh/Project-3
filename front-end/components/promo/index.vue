@@ -36,13 +36,14 @@
         </multi-range-slider>
         <span class="text-danger font-italic font-weight-bold">Binding</span>
         <b-form-group v-slot="{ ariaDescribedby }" class="mt-3">
-          <b-form-checkbox-group
+          <b-form-radio-group
             v-model="selected_binding"
             :options="options_binding"
             :aria-describedby="ariaDescribedby"
             name="flavour-2a"
+            @change="updateBinding"
             stacked
-          ></b-form-checkbox-group>
+          ></b-form-radio-group>
         </b-form-group>
         <span class="text-danger font-italic font-weight-bold">Languages</span>
         <b-form-group v-slot="{ ariaDescribedby }" class="mt-3">
@@ -119,15 +120,15 @@ export default {
       options_binding: [
         {
           text: "Paper Back",
-          value: "1",
+          value: "paperBack",
         },
         {
           text: "Hand Over",
-          value: "2",
+          value: "hardback",
         },
         {
           text: "Others",
-          value: "3",
+          value: "others",
         },
       ],
       options_languages: [
@@ -157,7 +158,12 @@ export default {
       await this.fetchBooks();
       setTimeout(() => {
         this.isRender = false;
-      }, 500);
+      }, 3000);
+    },
+    async updateBinding() {
+      this.search.binding =  this.selected_binding
+      console.log(this.search.binding)
+      await this.fetchBooks();
     },
     async fetchBooks() {
       const response = await this.GET(this.api, this.search);

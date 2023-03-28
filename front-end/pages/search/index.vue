@@ -1,51 +1,7 @@
 <template>
   <b-container class="mt-5">
     <div class="d-flex justify-content-between">
-      <div class="category-column" style="border-right: 1px solid #999">
-        <h4 class="category-title">Browse Categories</h4>
-        <ul class="list-group">
-          <li
-            :class="`list-group-item ${level[parent.level]}`"
-            v-for="parent in parents"
-            :key="parent.id"
-          >
-            <b-icon
-              class="icon"
-              icon="caret-right-fill"
-              aria-hidden="true"
-            ></b-icon
-            ><nuxt-link :to="`/categories/${parent.id}`">{{
-              parent.name
-            }}</nuxt-link>
-          </li>
-          <li
-            :class="`list-group-item category-active ${level[category.level]}`"
-          >
-            <b-icon
-              class="icon"
-              icon="caret-right-fill"
-              aria-hidden="true"
-            ></b-icon
-            ><nuxt-link :to="`/categories/${category.id}`">{{
-              category.name
-            }}</nuxt-link>
-          </li>
-          <li
-            :class="`list-group-item ${level[child.level]}`"
-            v-for="child in children"
-            :key="child.id"
-          >
-            <b-icon
-              class="icon"
-              icon="caret-right-fill"
-              aria-hidden="true"
-            ></b-icon
-            ><nuxt-link :to="`/categories/${child.id}`">{{
-              child.name
-            }}</nuxt-link>
-          </li>
-        </ul>
-      </div>
+      <div class="category-column" style="border-right: 1px solid #999"></div>
       <div class="book-column">
         <b-breadcrumb :items="breadcrumbs"></b-breadcrumb>
         <div class="d-flex justify-content-between pb-3">
@@ -66,11 +22,13 @@
           </div>
         </div>
         <HorizontalBook
+            v-if="books.length > 0"
           v-for="book in books"
           :key="book.id"
           :book="book"
           @showOrdersModal="showModal"
         />
+        <p v-else>No results found.</p>
       </div>
     </div>
     <b-modal
@@ -207,34 +165,13 @@ export default {
   },
   computed: {},
   methods: {
-    async fetchChildCategory() {
-      const response = await this.$axios.get(
-        `/categories/${this.$route.params.id}/child`
-      );
-      if (response.status === 200 && response.data) {
-        this.children = response.data.data;
-      }
-    },
-    async fetchParentCategory() {
-      const response = await this.$axios.get(
-        `/categories/${this.$route.params.id}/parent`
-      );
-      if (response.status === 200 && response.data) {
-        this.parents = response.data.data;
-      }
-    },
-    async fetchCategory() {
-      const response = await this.$axios.get(
-        `/categories/${this.$route.params.id}`
-      );
-      if (response.status === 200 && response.data) {
-        this.category = response.data.data;
-      }
-    },
     async fetchBooks() {
-      const response = await this.$axios.get(
-        `/categories/${this.$route.params.id}/products`
-      );
+      const keyword = this.$route.query.keyword;
+      const response = await this.$axios.get(`products/search`, {
+        params: {
+          keyword: keyword,
+        },
+      });
       if (response.status === 200 && response.data) {
         this.books = response.data.data;
       }
@@ -260,7 +197,9 @@ export default {
       }
     },
     async updateQuantity(id, qt) {
-      const response = await this.$axios.post(`/orders/${id}/update-quantity`, {quantity: qt});
+      const response = await this.$axios.post(`/orders/${id}/update-quantity`, {
+        quantity: qt,
+      });
       if (response.status === 200 && response.data) {
         this.fetchOrders();
       } else {
@@ -272,20 +211,7 @@ export default {
     },
   },
   async created() {
-    await this.fetchParentCategory();
-    await this.fetchCategory();
-    await this.fetchChildCategory();
     this.fetchBooks();
-    this.breadcrumbs = this.parents.map(function ({ id, name }) {
-      return {
-        text: name,
-        to: { name: `categories/${id}` },
-      };
-    });
-    this.breadcrumbs.push({
-      text: this.category.name,
-      to: { name: `categories/${this.category.id}` },
-    });
   },
 };
 </script>

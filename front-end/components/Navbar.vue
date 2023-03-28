@@ -10,9 +10,9 @@
             <b-row class="justify-content-end">
                 <b-col cols="10">
                     <b-input-group class="mt-3">
-                        <b-form-input placeholder="Search by Title, Author, Publisher or ISBN" class="input-search"></b-form-input>
+                        <b-form-input placeholder="Search by Title, Author, Publisher or ISBN" v-model="keyword" class="input-search"></b-form-input>
                         <b-input-group-append>
-                            <b-button class="btn-search"></b-button>
+                            <b-button @click="search()" class="btn-search"></b-button>
                         </b-input-group-append>
                     </b-input-group>
                 </b-col>
@@ -71,9 +71,6 @@
 
                     <b-nav-item href="#">
                         <nuxt-link to="/promo/new-arrivals">New Arrivals</nuxt-link>
-                    </b-nav-item>
-                    <b-nav-item href="#">
-                        <nuxt-link to="/promo/box-sets">Box Sets</nuxt-link>
                     </b-nav-item>
                     <b-nav-item href="#">
                         <nuxt-link to="/promo/best-sellers">Best sellers</nuxt-link>
@@ -196,6 +193,7 @@ export default {
     data() {
         return {
             categories: [],
+            keyword: ''
         };
     },
     computed: {
@@ -216,6 +214,9 @@ export default {
                 this.categories = response.data.data
             }
         },
+        search () {
+            
+        }
     },
 };
 </script>

@@ -10,7 +10,7 @@
       />
       <Slider
         @show-modal="showQuickView"
-        :books="bookSellers"
+        :books="arrivals"
         :title="'New Arrivals'"
       />
       <div class="d-flex justify-content-between">
@@ -48,7 +48,7 @@
       </div>
       <Slider
         @show-modal="showQuickView"
-        :books="bookSellers"
+        :books="award_winner"
         :title="'Award Winners'"
       />
       <Slider
@@ -58,7 +58,7 @@
       />
       <Slider
         @show-modal="showQuickView"
-        :books="bookSellers"
+        :books="minimum_discount"
         :title="'Minimum 40% Discount and Above'"
       />
     </b-container>
@@ -72,14 +72,35 @@ export default {
   data() {
     return {
       bookSellers: [],
+      arrivals: [],
+      minimum_discount: [],
+      award_winner: [],
       book: {},
     };
   },
   methods: {
     async fetchBookSellers() {
-      const response = await this.$axios.get(`/categories/2/products`);
+      const response = await this.$axios.get(`/products/best-sellers`);
       if (response.status === 200 && response.data) {
-        this.bookSellers = response.data.data;
+        this.bookSellers = response.data.data.data;
+      }
+    },
+    async fetchArrival() {
+      const response = await this.$axios.get(`/products/new-arrivals`);
+      if (response.status === 200 && response.data) {
+        this.arrivals = response.data.data.data;
+      }
+    },
+    async fetchMinimumFortyPercentDiscount() {
+      const response = await this.$axios.get(`/products/minimum-forty-percent-discount`);
+      if (response.status === 200 && response.data) {
+        this.minimum_discount = response.data.data;
+      }
+    },
+    async fetchAwardWinner() {
+      const response = await this.$axios.get(`/products/award-winner`);
+      if (response.status === 200 && response.data) {
+        this.award_winner = response.data.data.data;
       }
     },
 
@@ -87,8 +108,11 @@ export default {
       this.$refs.modal.showQuickView(id)
     },
   },
-  created() {
-    this.fetchBookSellers();
+  async created() {
+    await this.fetchBookSellers();
+    await this.fetchArrival();
+    await this.fetchMinimumFortyPercentDiscount()
+    await this.fetchAwardWinner()
   },
 };
 </script>

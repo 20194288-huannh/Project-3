@@ -37,22 +37,6 @@
         class="col-2 d-flex align-items-center justify-content-center"
       >
         <a
-          href="https://www.bookswagon.com/promo-best-seller/box-sets/389DA2389287"
-          class="d-flex flex-column justify-content-center align-items-center"
-        >
-          <img
-            src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/icon4.png"
-            width="71px"
-            height="71px"
-            alt="Box Sets"
-          /><br />
-          <span>Box Sets</span>
-        </a>
-      </b-list-group-item>
-      <b-list-group-item
-        class="col-2 d-flex align-items-center justify-content-center"
-      >
-        <a
           href="https://www.bookswagon.com/promo-best-seller/new-arrivals/99325F010C89"
           class="d-flex flex-column justify-content-center align-items-center"
         >
